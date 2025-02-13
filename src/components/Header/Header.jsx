@@ -42,20 +42,19 @@ export const Header = ({ card = { card }, setCard = { setCard } }) => {
               Ivan Ivanov
             </S.User>
             {isOpen && (
-              <div
-                className="header__pop-user-set pop-user-set"
+              <S.PopUserSet
                 id="user-set-target"
               >
-                <p className="pop-user-set__name">Ivan Ivanov</p>
-                <p className="pop-user-set__mail">ivan.ivanov@gmail.com</p>
-                <div className="pop-user-set__theme">
+                <S.UserName>Ivan Ivanov</S.UserName>
+                <S.UserMail>ivan.ivanov@gmail.com</S.UserMail>
+                <S.PopUserTheme>
                   <p>Темная тема</p>
-                  <input type="checkbox" className="checkbox" name="checkbox" />
-                </div>
-                <button type="button" className="_hover03">
-                  <a href="#popExit">Выйти</a>
-                </button>
-              </div>
+                  <input type="checkbox" name="checkbox" />
+                </S.PopUserTheme>
+                <S.PopUserExitBtn type="button">
+                  Выйти
+                </S.PopUserExitBtn>
+              </S.PopUserSet>
             )}
           </S.Nav>
         </S.Block>
