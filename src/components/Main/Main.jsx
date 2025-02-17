@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { cardList } from "../../data";
 import { Column } from "../Column/Column";
 import * as S from "./Main.styled.js";
+import { Outlet } from "react-router-dom";
 
 export const Main = () => {
   const [isloading, setIsLoading] = useState(true);
@@ -15,10 +16,11 @@ export const Main = () => {
   useEffect(() => {
     setTimeout(() => {
       setIsLoading(false);
-    }, 2000);
+    }, 500);
   }, []);
   return (
     <S.Main>
+      <Outlet/>
       <S.Container>
         {isloading ? (
           <p>Loading</p>
@@ -37,5 +39,6 @@ export const Main = () => {
         )}
       </S.Container>
     </S.Main>
+    
   );
 };

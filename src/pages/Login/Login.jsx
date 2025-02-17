@@ -1,4 +1,4 @@
-import * as S from './Login.styled.js'
+import * as S from "./Login.styled.js";
 export const Login = () => {
   return (
     <S.Wrapper>
@@ -16,18 +16,15 @@ export const Login = () => {
                 placeholder="Эл. почта"
               />
               <S.Input
-                class="modal__input"
                 type="password"
                 name="password"
                 id="formpassword"
                 placeholder="Пароль"
               />
-              <S.Button class="modal__btn-enter _hover01" id="btnEnter">
-                Войти
-              </S.Button>
+              <S.Button id="btnEnter">Войти</S.Button>
               <S.ModalGroup>
                 <p>Нужно зарегистрироваться?</p>
-                <a href="signup.html">Регистрируйтесь здесь</a>
+                <span>Регистрируйтесь здесь</span>
               </S.ModalGroup>
             </S.Form>
           </S.BlockModal>

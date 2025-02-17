@@ -1,8 +1,7 @@
 import styled from "styled-components";
-import { hover01, hover03 } from "../../Global.styled.js";
+import { hover01, hover02, hover03 } from "../../Global.styled.js";
 
 export const Exit = styled.div`
-  display: none;
   width: 100%;
   height: 100%;
   min-width: 320px;
@@ -91,8 +90,6 @@ export const NoButton = styled.button`
   line-height: 21px;
   font-weight: 500;
   letter-spacing: -0.14px;
-  color: #ffffff;
-
   $:hover {
     ${hover03}
   }

@@ -1,12 +1,19 @@
 import { useState } from "react";
 import { cardList } from "../../data";
 import * as S from "./Header.styled.js";
+import { useNavigate } from "react-router-dom";
 
 export const Header = ({ theme, setTheme, setCard }) => {
+  const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
 
   const handleOpen = () => {
     setIsOpen(!isOpen);
+  };
+
+  const Exit = (e) => {
+    e.preventDefault();
+    navigate("/exit");
   };
 
   const handleAddCard = () => {
@@ -36,8 +43,7 @@ export const Header = ({ theme, setTheme, setCard }) => {
           {theme === "light" ? (
             <S.Logo src="/public/logo.png" alt="logo"></S.Logo>
           ) : (
-            <S.Logo src="/public/logo_dark.png" alt="logo">
-            </S.Logo>
+            <S.Logo src="/public/logo_dark.png" alt="logo"></S.Logo>
           )}
           <S.Nav>
             <S.AddButton onClick={handleAddCard} id="btnMainNew">
@@ -59,7 +65,9 @@ export const Header = ({ theme, setTheme, setCard }) => {
                     onClick={handleNightTheme}
                   />
                 </S.PopUserTheme>
-                <S.PopUserExitBtn type="button">Выйти</S.PopUserExitBtn>
+                <S.PopUserExitBtn type="button" onClick={Exit}>
+                  Выйти
+                </S.PopUserExitBtn>
               </S.PopUserSet>
             )}
           </S.Nav>
