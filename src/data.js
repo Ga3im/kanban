@@ -2,7 +2,7 @@ export const cardList = [
     {
         id:1,
         date: '15.05.25',
-        topic: 'Web design',
+        topic: 'Web Design',
         title: 'Название задачи',
         status: 'Готово'
     },
@@ -23,7 +23,7 @@ export const cardList = [
     {
         id:4,
         date: '15.08.25',
-        topic: 'Web design',
+        topic: 'Web Design',
         title: 'Название задачи',
         status: 'Без статуса'
     },
@@ -37,7 +37,7 @@ export const cardList = [
     {
         id:6,
         date: '15.06.25',
-        topic: 'Web design',
+        topic: 'Web Design',
         title: 'Название задачи',
         status: 'Без статуса'
     }
