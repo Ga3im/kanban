@@ -1,25 +1,27 @@
-export const Card = ({card}) => {
+import * as S from "./Card.styled.js";
+
+export const Card = ({ card }) => {
   return (
-    <div className="cards">
-      <div className="cards__item">
-        <div className="cards__card card">
-          <div className="card__group">
-            <div className="card__theme _orange">
-              <p className="_orange">{card.topic}</p>
-            </div>
+    <S.Cards>
+      <S.CardItem>
+        <S.CardsCard>
+          <S.Group>
+            <S.CardTheme $color={card.topic}>
+              <p>{card.topic}</p>
+            </S.CardTheme>
             <a href="#popBrowse" target="_self">
-              <div className="card__btn">
+              <S.CardBtn>
                 <div></div>
                 <div></div>
                 <div></div>
-              </div>
+              </S.CardBtn>
             </a>
-          </div>
-          <div className="card__content">
+          </S.Group>
+          <S.Content>
             <a href="" target="_blank">
-              <h3 className="card__title">{card.title}</h3>
+              <S.Title>{card.title}</S.Title>
             </a>
-            <div className="card__date">
+            <S.Date>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="13"
@@ -49,10 +51,10 @@ export const Card = ({card}) => {
                 </defs>
               </svg>
               <p>{card.date}</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+            </S.Date>
+          </S.Content>
+        </S.CardsCard>
+      </S.CardItem>
+    </S.Cards>
   );
 };

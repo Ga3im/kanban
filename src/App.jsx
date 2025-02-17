@@ -1,27 +1,23 @@
 import { useState } from "react";
 import { cardList } from "./data";
 import "./App.css";
-import { Header } from "./components/Header/Header";
 import { Main } from "./components/Main/Main";
-import { PopNewCard } from "./components/Popups/PopNewCard/PopNewCard";
-import { PopBrowse } from "./components/Popups/PopBrowse/PopBrowse";
-import { PopUser } from "./components/Popups/PopUser/PopUser";
-import { GlobalStyle } from "./Global.styled";
+
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Route } from "./pages/routes";
 
 function App() {
-	
   const [card, setCard] = useState(cardList);
- 
   return (
     <>
-	<GlobalStyle/>
-      <div className="wrapper">
-        <PopUser />
-        <PopNewCard />
-        <PopBrowse />
-        <Header card={card} setCard={setCard}/>
-        <Main card={card} />
-      </div>
+      <BrowserRouter>
+        <Routes>
+          <Route
+            path={Route.main}
+            element={<Main card={card} setCard={setCard} />}
+          />
+        </Routes>
+      </BrowserRouter>
     </>
   );
 }
