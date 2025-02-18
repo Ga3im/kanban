@@ -27,12 +27,12 @@ export const Container = styled.div`
 export const Block = styled.div`
   display: block;
   margin: 0 auto;
-  background-color: #ffffff;
+  background-color: ${($prop) => $prop.theme.header};
   max-width: 370px;
   width: 100%;
   padding: 50px 60px;
-  border-radius: 10px;
-  border: 0.7px solid #d4dbe5;
+  border-radius: 10px;s
+  border: 0.7px solid ${($prop) => $prop.theme.borderExitPage};
   box-shadow: 0px 4px 67px -12px rgba(0, 0, 0, 0.13);
 `;
 
@@ -71,7 +71,7 @@ export const YesButton = styled.button`
   color: #ffffff;
   margin-right: 10px;
 
-  $:hover {
+  &:hover {
     ${hover01}
   }
 `;
@@ -90,7 +90,8 @@ export const NoButton = styled.button`
   line-height: 21px;
   font-weight: 500;
   letter-spacing: -0.14px;
-  $:hover {
+  color: ${($prop) => $prop.theme.text};
+  &:hover {
     ${hover03}
   }
 `;

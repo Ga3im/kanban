@@ -11,21 +11,38 @@ import { ThemeProvider } from "styled-components";
 import { Register } from "./pages/Register/Register.jsx";
 import { Login } from "./pages/Login/Login.jsx";
 import { NotFound } from "./pages/NotFound/NotFound.jsx";
+import { PrivateRoute } from "./components/PrivateRoute/PrivateRoute.jsx";
+import { CreateCard } from "./pages/CreateCard/CreateCard.jsx";
 
 function App() {
   const [theme, setTheme] = useState("light");
   const [card, setCard] = useState(cardList);
+  const [isAuth, setIsAuth] = useState(true);
   return (
     <>
       <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
         <GlobalStyle />
         <Wrapper>
-          <Header theme={theme} setTheme={setTheme} setCard={setCard} />
+          <Header
+            isAuth={isAuth}
+            theme={theme}
+            setTheme={setTheme}
+            setCard={setCard}
+          />
           <Routes>
-            <Route path={Router.main} element={<Main card={card} />}>
-              <Route path={Router.exit} element={<Exit />} />
+            <Route element={<PrivateRoute isAuth={isAuth} />}>
+              <Route path={Router.main} element={<Main card={card} />}>
+                <Route
+                  path={Router.exit}
+                  element={<Exit setIsAuth={setIsAuth} />}
+                />
+                <Route path={Router.CreateCard} element={<CreateCard setCard={setCard} />} />
+              </Route>
             </Route>
-            <Route path={Router.login} element={<Login />} />
+            <Route
+              path={Router.login}
+              element={<Login setIsAuth={setIsAuth} />}
+            />
             <Route path={Router.register} element={<Register />} />
             <Route path={Router.notFound} element={<NotFound />} />
           </Routes>

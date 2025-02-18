@@ -1,5 +1,14 @@
+import { useNavigate } from "react-router-dom";
 import * as S from "./Login.styled.js";
-export const Login = () => {
+import { Router } from "../routes.js";
+export const Login = ({ setIsAuth }) => {
+  const navigate = useNavigate();
+  const login = (e) => {
+    e.preventDefault();
+    setIsAuth(true);
+    navigate(Router.main);
+  };
+
   return (
     <S.Wrapper>
       <S.Container>
@@ -8,20 +17,10 @@ export const Login = () => {
             <S.ModalTtl>
               <h2>Вход</h2>
             </S.ModalTtl>
-            <S.Form id="formLogIn" action="#">
-              <S.Input
-                type="text"
-                name="login"
-                id="formlogin"
-                placeholder="Эл. почта"
-              />
-              <S.Input
-                type="password"
-                name="password"
-                id="formpassword"
-                placeholder="Пароль"
-              />
-              <S.Button id="btnEnter">Войти</S.Button>
+            <S.Form action="#">
+              <S.Input type="text" name="login" placeholder="Эл. почта" />
+              <S.Input type="password" name="password" placeholder="Пароль" />
+              <S.Button onClick={login}>Войти</S.Button>
               <S.ModalGroup>
                 <p>Нужно зарегистрироваться?</p>
                 <span>Регистрируйтесь здесь</span>

@@ -1,16 +1,18 @@
 import { useNavigate } from "react-router-dom";
 import * as S from "./Exit.styled.js";
+import { Router } from "../routes.js";
 
-export const Exit = () => {
+export const Exit = ({setIsAuth}) => {
   const navigate = useNavigate();
-  const logout = (e)=>{
+  const logout = (e) => {
     e.preventDefault();
-    navigate('/login');
-  }
-  const cancel = (e)=>{
+    navigate(Router.login);
+    setIsAuth(false);
+  };
+  const cancel = (e) => {
     e.preventDefault();
-    navigate('/');
-  }
+    navigate(Router.main);
+  };
   return (
     <S.Exit>
       <S.Container>
