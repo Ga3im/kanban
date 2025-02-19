@@ -4,7 +4,8 @@ import { hover01, hover02, hover03 } from "../../Global.styled";
 export const Header = styled.header`
   width: 100%;
   margin: 0 auto;
-  background-color: #ffffff;
+  background-color: ${(prop) => prop.theme.header};
+  transition: all 0.25s linear;
 `;
 
 export const Container = styled.div`
@@ -62,15 +63,15 @@ export const User = styled.p`
   justify-content: center;
   font-size: 14px;
   line-height: 20px;
-  color: #565eef;
+  color: ${(prop) => prop.theme.userName};
 
   &:hover {
     ${hover02}
   }
 
   &:hover::after {
-    border-left-color: #33399b;
-    border-bottom-color: #33399b;
+    border-left-color: ${(prop) => prop.theme.hoverColor};
+    border-bottom-color: ${(prop) => prop.theme.hoverColor};
   }
 
   &::after {
@@ -79,8 +80,8 @@ export const User = styled.p`
     width: 6px;
     height: 6px;
     border-radius: 1px;
-    border-left: 1.9px solid #565eef;
-    border-bottom: 1.9px solid #565eef;
+    border-left: 1.9px solid ${(prop) => prop.theme.userName};
+    border-bottom: 1.9px solid ${(prop) => prop.theme.userName};
     transform: ${(prop) =>
       prop.$isOpen ? "rotate(135deg)" : "rotate(-45deg)"};
     margin: 0px 0 0 5px;
@@ -96,7 +97,7 @@ export const PopUserSet = styled.div`
   height: 205px;
   border-radius: 10px;
   border: 0.7px solid rgba(148, 166, 190, 0.4);
-  background: #fff;
+  background: ${(prop) => prop.theme.popUserSet};
   box-shadow: 0px 10px 39px 0px rgba(26, 56, 101, 0.21);
   padding: 34px;
   text-align: center;
@@ -104,7 +105,7 @@ export const PopUserSet = styled.div`
 `;
 
 export const UserName = styled.p`
-  color: #000;
+  color: ${(prop) => prop.theme.text};
   font-size: 14px;
   font-weight: 500;
   line-height: 21px;
@@ -127,7 +128,7 @@ export const PopUserTheme = styled.div`
   margin-bottom: 30px;
 
   p {
-    color: #000;
+    color: ${(prop) => prop.theme.text};
     font-size: 14px;
     line-height: 21px;
     letter-spacing: -0.14px;
@@ -163,9 +164,10 @@ export const PopUserTheme = styled.div`
 
 export const PopUserExitBtn = styled.button`
   padding: 5px 10px;
-  color: #565eef;
-  border: solid 1px #565eef;
+  color: ${(prop) => prop.theme.popUserBtn};
+  border: solid 1px ${(prop) => prop.theme.popUserBtn};
   border-radius: 4px;
-
-  ${hover03}
+  box-shadow: 0px 0px 20px -3px;
+  background: ${(prop) => prop.theme.popUserSet};
+  ${hover03};
 `;
