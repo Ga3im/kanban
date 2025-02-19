@@ -1,8 +1,15 @@
+import { useNavigate } from "react-router-dom";
 import * as S from "./Card.styled.js";
+import { Router } from "../../pages/routes.js";
 
 export const Card = ({ card }) => {
+  const navigate = useNavigate();
+  const openUserCard= (e)=>{
+    e.preventDefault();
+    navigate(Router.UserCard)
+  }
   return (
-    <S.Cards>
+    <S.Cards onClick={openUserCard}>
       <S.CardItem>
         <S.CardsCard>
           <S.Group>

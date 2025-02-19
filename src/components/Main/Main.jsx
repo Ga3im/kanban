@@ -2,18 +2,10 @@ import { useEffect, useState } from "react";
 import { cardList } from "../../data";
 import { Column } from "../Column/Column";
 import * as S from "./Main.styled.js";
-import { ThemeProvider } from "styled-components";
-import {
-  darkTheme,
-  GlobalStyle,
-  lightTheme,
-  Wrapper,
-} from "../../Global.styled.js";
-import { Header } from "../Header/Header.styled.js";
+import { Outlet } from "react-router-dom";
 
-export const Main = ({setCard}) => {
+export const Main = () => {
   const [isloading, setIsLoading] = useState(true);
-  const [theme, setTheme] = useState("light");
   const statusList = [
     "Без статуса",
     "Нужно сделать",
@@ -24,34 +16,29 @@ export const Main = ({setCard}) => {
   useEffect(() => {
     setTimeout(() => {
       setIsLoading(false);
-    }, 2000);
+    }, 500);
   }, []);
   return (
-    <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
-      <GlobalStyle />
-      <Wrapper>
-        <Header setCard={setCard} theme={theme} setTheme={setTheme} />
-
-        <S.Main>
-          <S.Container>
-            {isloading ? (
-              <p>Loading</p>
-            ) : (
-              <S.Block>
-                <S.Content>
-                  {statusList.map((status) => (
-                    <Column
-                      key={status}
-                      title={status}
-                      cardList={cardList.filter((i) => i.status === status)}
-                    />
-                  ))}
-                </S.Content>
-              </S.Block>
-            )}
-          </S.Container>
-        </S.Main>
-      </Wrapper>
-    </ThemeProvider>
+    <S.Main>
+      <Outlet/>
+      <S.Container>
+        {isloading ? (
+          <p>Loading</p>
+        ) : (
+          <S.Block>
+            <S.Content>
+              {statusList.map((status) => (
+                <Column
+                  key={status}
+                  title={status}
+                  cardList={cardList.filter((i) => i.status === status)}
+                />
+              ))}
+            </S.Content>
+          </S.Block>
+        )}
+      </S.Container>
+    </S.Main>
+    
   );
 };

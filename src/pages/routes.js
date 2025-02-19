@@ -1,8 +1,9 @@
-export const Route = {
+export const Router = {
   main: "/",
   login: '/login',
   register: '/register',
-  card: 'card/cardId',
+  UserCard: '/card/:cardId',
+  CreateCard: '/createCard',
   exit: "/exit",
-  notFound: "/*",
+  notFound: "*",
 };

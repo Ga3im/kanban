@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { hover01, hover03 } from "../../Global.styled";
 
 export const Wrapper = styled.div`
   width: 100%;
@@ -104,6 +105,10 @@ export const Button = styled.button`
   font-weight: 500;
   letter-spacing: -0.14px;
   color: #ffffff;
+
+  &:hover {
+    ${hover01}
+  }
 `;
 
 export const ModalGroup = styled.div`
@@ -112,7 +117,12 @@ export const ModalGroup = styled.div`
     color: rgba(148, 166, 190, 0.4);
     font-size: 14px;
     font-weight: 400;
-    line-height: 150%;
+    line-height: 100%;
     letter-spacing: -0.14px;
+  }
+  span {
+    text-decoration: underline;
+    cursor: pointer;
+    color: #808080;
   }
 `;

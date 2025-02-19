@@ -24,6 +24,7 @@ export const lightTheme = {
   greenText: "#06b16e",
   grayBg: "#94a6be",
   grayText: "#ffffff",
+  borderExitPage: "#D4DBE5",
 };
 
 export const darkTheme = {
@@ -43,6 +44,7 @@ export const darkTheme = {
   greenText: "#b4fdd1",
   grayBg: "#94a6be",
   grayText: "#ffffff",
+  borderExitPage: "#4E5566",
 };
 
 export const GlobalStyle = createGlobalStyle`
@@ -132,4 +134,11 @@ export const Purple = css`
 export const Gray = css`
   background-color: ${({ theme }) => theme.grayBg};
   color: ${({ theme }) => theme.grayText};
+`;
+
+export const SubTtl = css`
+  color: #000;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1;
 `;

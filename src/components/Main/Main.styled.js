@@ -3,9 +3,7 @@ import styled from "styled-components";
 export const Main = styled.main`
   width: 100%;
   background-color: ${(prop) => prop.theme.mainBackground};
-  overflow-y: auto;
   transition: all 0.25s linear;
-
 `;
 
 export const Container = styled.div`
@@ -30,4 +28,5 @@ export const Block = styled.div`
 export const Content = styled.div`
   width: 100%;
   display: flex;
+  flex-wrap: wrap;
 `;
