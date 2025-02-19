@@ -3,6 +3,12 @@ import * as S from "./Login.styled.js";
 import { Router } from "../routes.js";
 export const Login = ({ setIsAuth }) => {
   const navigate = useNavigate();
+
+  const goToRegister = (e) => {
+    e.preventDefault();
+    navigate(Router.register);
+  };
+
   const login = (e) => {
     e.preventDefault();
     setIsAuth(true);
@@ -23,7 +29,7 @@ export const Login = ({ setIsAuth }) => {
               <S.Button onClick={login}>Войти</S.Button>
               <S.ModalGroup>
                 <p>Нужно зарегистрироваться?</p>
-                <span>Регистрируйтесь здесь</span>
+                <span onClick={goToRegister}>Регистрируйтесь здесь</span>
               </S.ModalGroup>
             </S.Form>
           </S.BlockModal>

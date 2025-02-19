@@ -1,10 +1,11 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import * as S from "./UserCard.styled.js";
 import { Router } from "../routes.js";
 import {  useState } from "react";
 
 export const UserCard = () => {
   const [isEdit, setIsEdit] = useState(false);
+  let { cardId } = useParams();
   const navigate = useNavigate();
 
   const closeUserCard = () => {
@@ -46,7 +47,7 @@ export const UserCard = () => {
                   <S.Label htmlFor="textArea01">Описание задачи</S.Label>
                   <S.TextArea
                     name="text"
-                    readOnly
+                    readOnly={isEdit ? false : true}
                     placeholder="Введите описание задачи..."
                   ></S.TextArea>
                 </S.FormBlock>

@@ -6,7 +6,7 @@ export const Wrapper = styled.div`
   height: 100%;
   overflow-x: hidden;
   overflow-y: scroll;
-  background-color: #eaeef6;
+  background-color: ${($prop) => $prop.theme.mainBackground};
 `;
 
 export const Container = styled.div`
@@ -30,7 +30,7 @@ export const Modal = styled.div`
 export const BlockModal = styled.div`
   display: block;
   margin: 0 auto;
-  background-color: #ffffff;
+  background-color: ${($prop) => $prop.theme.header};
   max-width: 368px;
   width: 100%;
   padding: 50px 60px;
@@ -55,11 +55,8 @@ export const Form = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 7px;
   justify-content: center;
-
-  input:first-child {
-    margin-bottom: 7px;
-  }
 `;
 
 export const Input = styled.input`
@@ -69,6 +66,7 @@ export const Input = styled.input`
   border: 0.7px solid rgba(148, 166, 190, 0.4);
   outline: none;
   padding: 10px 8px;
+  background: transparent;
 
   &::-moz-placeholder {
     font-family: "Roboto", sans-serif;

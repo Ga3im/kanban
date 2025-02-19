@@ -125,7 +125,6 @@ export const PopUserTheme = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 30px;
 
   p {
     color: ${(prop) => prop.theme.text};
@@ -169,5 +168,6 @@ export const PopUserExitBtn = styled.button`
   border-radius: 4px;
   box-shadow: 0px 0px 20px -3px;
   background: ${(prop) => prop.theme.popUserSet};
+  margin-top: 30px;
   ${hover03};
 `;

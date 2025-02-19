@@ -1,6 +1,15 @@
 import * as S from "./Register.styled.js";
+import { Router } from "../routes.js";
+import { useNavigate } from "react-router-dom";
 
 export const Register = () => {
+  let navigate = useNavigate()
+
+  const goToLogin = (e) => {
+    e.preventDefault();
+    navigate(Router.login);
+  };
+
   return (
     <S.Wrapper>
       <S.Container>
@@ -31,7 +40,8 @@ export const Register = () => {
               <S.Button id="SignUpEnter">Зарегистрироваться</S.Button>
               <S.ModalGroup>
                 <p>
-                  Уже есть аккаунт? <span> Войдите здесь</span>
+                  Уже есть аккаунт?{" "}
+                  <span onClick={goToLogin}> Войдите здесь</span>
                 </p>
               </S.ModalGroup>
             </S.Form>

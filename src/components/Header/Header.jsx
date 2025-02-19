@@ -18,7 +18,7 @@ export const Header = ({ isAuth, theme, setTheme }) => {
   };
 
   const handleAddCard = () => {
-    navigate(Router.CreateCard)
+    navigate(Router.CreateCard);
   };
 
   const handleNightTheme = () => {
@@ -65,7 +65,14 @@ export const Header = ({ isAuth, theme, setTheme }) => {
               )}
             </S.Nav>
           ) : (
-            ""
+            <S.PopUserTheme>
+              <p>Темная тема</p>
+              <input
+                type="checkbox"
+                name="checkbox"
+                onClick={handleNightTheme}
+              />
+            </S.PopUserTheme>
           )}
         </S.Block>
       </S.Container>

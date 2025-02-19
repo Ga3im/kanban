@@ -44,7 +44,7 @@ export const Container = styled.div`
 export const Block = styled.div`
   display: block;
   margin: 0 auto;
-  background-color: #ffffff;
+  background-color: ${($prop) => $prop.theme.header};
   max-width: 630px;
   width: 100%;
   padding: 40px 30px 48px;
@@ -59,7 +59,7 @@ export const Content = styled.div`
 `;
 
 export const Title = styled.div`
-  color: #000;
+  color:${($prop) => $prop.theme.text} ;
   font-size: 20px;
   font-weight: 600;
   line-height: 24px;
@@ -96,7 +96,7 @@ export const FormBlock = styled.div`
 `;
 
 export const Label = styled.label`
-  color: #000;
+  color: ${($prop) => $prop.theme.text};
   font-size: 14px;
   font-weight: 600;
   line-height: 1;
@@ -209,5 +209,5 @@ export const Button = styled.button`
   line-height: 1;
   color: #ffffff;
   float: right;
-  &: ${hover01};
+  ${hover01};
 `;
