@@ -4,10 +4,12 @@ import { Router } from "../../pages/routes.js";
 
 export const Card = ({ card }) => {
   const navigate = useNavigate();
-  const openUserCard= (e)=>{
+
+  const openUserCard = (e) => {
     e.preventDefault();
-    navigate(Router.UserCard)
-  }
+
+    navigate(`/card/:${card.id}`);
+  };
   return (
     <S.Cards onClick={openUserCard}>
       <S.CardItem>

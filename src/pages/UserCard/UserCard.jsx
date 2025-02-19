@@ -1,11 +1,10 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import * as S from "./UserCard.styled.js";
 import { Router } from "../routes.js";
-import { useState } from "react";
+import {  useState } from "react";
 
 export const UserCard = () => {
   const [isEdit, setIsEdit] = useState(false);
-  let { cardId } = useParams();
   const navigate = useNavigate();
 
   const closeUserCard = () => {

@@ -41,7 +41,7 @@ function App() {
                   path={Router.CreateCard}
                   element={<CreateCard setCard={setCard} />}
                 />
-                <Route path={Router.UserCard} element={<UserCard />} />
+                <Route path={Router.UserCard} element={<UserCard card={card}/>} />
               </Route>
             </Route>
             <Route
