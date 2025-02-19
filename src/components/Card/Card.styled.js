@@ -15,6 +15,8 @@ export const Cards = styled.div`
   width: 100%;
   display: block;
   position: relative;
+  &:hover{
+  cursor: pointer;}
   @media screen and (max-width: 1200px) {
     width: 100%;
     display: flex;

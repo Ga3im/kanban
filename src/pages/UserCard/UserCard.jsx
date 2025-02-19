@@ -1,54 +1,57 @@
-export const PopBrowse = () => {
+import { useNavigate, useParams } from "react-router-dom";
+import * as S from "./UserCard.styled.js";
+import { Router } from "../routes.js";
+import { useState } from "react";
+
+export const UserCard = () => {
+  const [isEdit, setIsEdit] = useState(false);
+  let { cardId } = useParams();
+  const navigate = useNavigate();
+
+  const closeUserCard = () => {
+    navigate(Router.main);
+  };
+
+  const editCard = (e) => {
+    e.preventDefault();
+    setIsEdit(true);
+  };
+
+  const cancelEdit = (e) => {
+    e.preventDefault();
+    setIsEdit(false);
+  };
+
   return (
-    <div className="pop-browse" id="popBrowse">
-      <div className="pop-browse__container">
-        <div className="pop-browse__block">
-          <div className="pop-browse__content">
-            <div className="pop-browse__top-block">
-              <h3 className="pop-browse__ttl">Название задачи</h3>
-              <div className="categories__theme theme-top _orange _active-category">
-                <p className="_orange">Web Design</p>
-              </div>
-            </div>
-            <div className="pop-browse__status status">
-              <p className="status__p subttl">Статус</p>
-              <div className="status__themes">
-                <div className="status__theme _hide">
+    <S.Browse>
+      <S.Container>
+        <S.Block>
+          <S.Content>
+            <S.TopBlock>
+              <S.Title> Название задачи{cardId}</S.Title>
+              <S.Categories $topic={"Web Design"}>
+                <p>Web Design</p>
+              </S.Categories>
+            </S.TopBlock>
+            <S.Status>
+              <S.StatusP>Статус</S.StatusP>
+              <S.StatusThemes>
+                <S.StatusTheme $status={"Без статуса"}>
                   <p>Без статуса</p>
-                </div>
-                <div className="status__theme _gray">
-                  <p className="_gray">Нужно сделать</p>
-                </div>
-                <div className="status__theme _hide">
-                  <p>В работе</p>
-                </div>
-                <div className="status__theme _hide">
-                  <p>Тестирование</p>
-                </div>
-                <div className="status__theme _hide">
-                  <p>Готово</p>
-                </div>
-              </div>
-            </div>
-            <div className="pop-browse__wrap">
-              <form
-                className="pop-browse__form form-browse"
-                id="formBrowseCard"
-                action="#"
-              >
-                <div className="form-browse__block">
-                  <label htmlFor="textArea01" className="subttl">
-                    Описание задачи
-                  </label>
-                  <textarea
-                    className="form-browse__area"
+                </S.StatusTheme>
+              </S.StatusThemes>
+            </S.Status>
+            <S.Wrap>
+              <S.Form action="#">
+                <S.FormBlock>
+                  <S.Label htmlFor="textArea01">Описание задачи</S.Label>
+                  <S.TextArea
                     name="text"
-                    id="textArea01"
                     readOnly
                     placeholder="Введите описание задачи..."
-                  ></textarea>
-                </div>
-              </form>
+                  ></S.TextArea>
+                </S.FormBlock>
+              </S.Form>
               <div className="pop-new-card__calendar calendar">
                 <p className="calendar__ttl subttl">Даты</p>
                 <div className="calendar__block">
@@ -103,28 +106,42 @@ export const PopBrowse = () => {
                       <div className="calendar__cell _cell-day _weekend _active-day">
                         9
                       </div>
-                      <div className="calendar__cell _cell-day _weekend">10</div>
+                      <div className="calendar__cell _cell-day _weekend">
+                        10
+                      </div>
                       <div className="calendar__cell _cell-day">11</div>
                       <div className="calendar__cell _cell-day">12</div>
                       <div className="calendar__cell _cell-day">13</div>
                       <div className="calendar__cell _cell-day">14</div>
                       <div className="calendar__cell _cell-day">15</div>
-                      <div className="calendar__cell _cell-day _weekend">16</div>
-                      <div className="calendar__cell _cell-day _weekend">17</div>
+                      <div className="calendar__cell _cell-day _weekend">
+                        16
+                      </div>
+                      <div className="calendar__cell _cell-day _weekend">
+                        17
+                      </div>
                       <div className="calendar__cell _cell-day">18</div>
                       <div className="calendar__cell _cell-day">19</div>
                       <div className="calendar__cell _cell-day">20</div>
                       <div className="calendar__cell _cell-day">21</div>
                       <div className="calendar__cell _cell-day">22</div>
-                      <div className="calendar__cell _cell-day _weekend">23</div>
-                      <div className="calendar__cell _cell-day _weekend">24</div>
+                      <div className="calendar__cell _cell-day _weekend">
+                        23
+                      </div>
+                      <div className="calendar__cell _cell-day _weekend">
+                        24
+                      </div>
                       <div className="calendar__cell _cell-day">25</div>
                       <div className="calendar__cell _cell-day">26</div>
                       <div className="calendar__cell _cell-day">27</div>
                       <div className="calendar__cell _cell-day">28</div>
                       <div className="calendar__cell _cell-day">29</div>
-                      <div className="calendar__cell _cell-day _weekend">30</div>
-                      <div className="calendar__cell _other-month _weekend">1</div>
+                      <div className="calendar__cell _cell-day _weekend">
+                        30
+                      </div>
+                      <div className="calendar__cell _other-month _weekend">
+                        1
+                      </div>
                     </div>
                   </div>
 
@@ -137,48 +154,44 @@ export const PopBrowse = () => {
                   </div>
                 </div>
               </div>
-            </div>
-            <div className="theme-down__categories theme-down">
-              <p className="categories__p subttl">Категория</p>
-              <div className="categories__theme _orange _active-category">
-                <p className="_orange">Web Design</p>
-              </div>
-            </div>
-            <div className="pop-browse__btn-browse ">
-              <div className="btn-group">
-                <button className="btn-browse__edit _btn-bor _hover03">
-                  <a href="#">Редактировать задачу</a>
-                </button>
-                <button className="btn-browse__delete _btn-bor _hover03">
-                  <a href="#">Удалить задачу</a>
-                </button>
-              </div>
-              <button className="btn-browse__close _btn-bg _hover01">
-                <a href="#">Закрыть</a>
-              </button>
-            </div>
-            <div className="pop-browse__btn-edit _hide">
-              <div className="btn-group">
-                <button className="btn-edit__edit _btn-bg _hover01">
-                  <a href="#">Сохранить</a>
-                </button>
-                <button className="btn-edit__edit _btn-bor _hover03">
-                  <a href="#">Отменить</a>
-                </button>
-                <button
-                  className="btn-edit__delete _btn-bor _hover03"
-                  id="btnDelete"
-                >
-                  <a href="#">Удалить задачу</a>
-                </button>
-              </div>
-              <button className="btn-edit__close _btn-bg _hover01">
-                <a href="#">Закрыть</a>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+            </S.Wrap>
+            <S.ThemeDown>
+              <S.Cat>Категория</S.Cat>
+              <S.Categories $topic={"Web Design"}>
+                <p>Web Design</p>
+              </S.Categories>
+            </S.ThemeDown>
+
+            {isEdit ? (
+              <S.BtnBrowse>
+                <S.BtnGroup>
+                  <S.CloseButton className="btn-edit__edit _btn-bg _hover01">
+                    Сохранить
+                  </S.CloseButton>
+                  <S.Button onClick={cancelEdit}>Отменить</S.Button>
+                  <S.Button
+                    className="btn-edit__delete _btn-bor _hover03"
+                    id="btnDelete"
+                  >
+                    Удалить задачу
+                  </S.Button>
+                </S.BtnGroup>
+                <S.CloseButton className="btn-edit__close _btn-bg _hover01">
+                  Закрыть
+                </S.CloseButton>
+              </S.BtnBrowse>
+            ) : (
+              <S.BtnBrowse>
+                <S.BtnGroup>
+                  <S.Button onClick={editCard}>Редактировать задачу</S.Button>
+                  <S.Button>Удалить задачу</S.Button>
+                </S.BtnGroup>
+                <S.CloseButton onClick={closeUserCard}>Закрыть</S.CloseButton>
+              </S.BtnBrowse>
+            )}
+          </S.Content>
+        </S.Block>
+      </S.Container>
+    </S.Browse>
   );
 };

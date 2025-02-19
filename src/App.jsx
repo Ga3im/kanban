@@ -13,6 +13,7 @@ import { Login } from "./pages/Login/Login.jsx";
 import { NotFound } from "./pages/NotFound/NotFound.jsx";
 import { PrivateRoute } from "./components/PrivateRoute/PrivateRoute.jsx";
 import { CreateCard } from "./pages/CreateCard/CreateCard.jsx";
+import { UserCard } from "./pages/UserCard/UserCard.jsx";
 
 function App() {
   const [theme, setTheme] = useState("light");
@@ -36,7 +37,11 @@ function App() {
                   path={Router.exit}
                   element={<Exit setIsAuth={setIsAuth} />}
                 />
-                <Route path={Router.CreateCard} element={<CreateCard setCard={setCard} />} />
+                <Route
+                  path={Router.CreateCard}
+                  element={<CreateCard setCard={setCard} />}
+                />
+                <Route path={Router.UserCard} element={<UserCard />} />
               </Route>
             </Route>
             <Route
