@@ -4,8 +4,9 @@ import { Column } from "../Column/Column";
 import * as S from "./Main.styled.js";
 import { Outlet } from "react-router-dom";
 
-export const Main = () => {
+export const Main = ({ card, setCard }) => {
   const [isloading, setIsLoading] = useState(true);
+
   const statusList = [
     "Без статуса",
     "Нужно сделать",
@@ -13,14 +14,16 @@ export const Main = () => {
     "Тестирование",
     "Готово",
   ];
+
   useEffect(() => {
     setTimeout(() => {
       setIsLoading(false);
     }, 500);
   }, []);
+
   return (
     <S.Main>
-      <Outlet/>
+      <Outlet />
       <S.Container>
         {isloading ? (
           <p>Loading</p>
@@ -30,8 +33,9 @@ export const Main = () => {
               {statusList.map((status) => (
                 <Column
                   key={status}
+                  setCard={setCard}
                   title={status}
-                  cardList={cardList.filter((i) => i.status === status)}
+                  card={card.filter((i) => i.status === status)}
                 />
               ))}
             </S.Content>
@@ -39,6 +43,5 @@ export const Main = () => {
         )}
       </S.Container>
     </S.Main>
-    
   );
 };

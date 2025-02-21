@@ -1,9 +1,10 @@
 import { useNavigate, useParams } from "react-router-dom";
 import * as S from "./UserCard.styled.js";
 import { Router } from "../routes.js";
-import {  useState } from "react";
+import { useEffect, useState } from "react";
+import { getCards } from "../../api.js";
 
-export const UserCard = () => {
+export const UserCard = ({ card, setCard }) => {
   const [isEdit, setIsEdit] = useState(false);
   let { cardId } = useParams();
   const navigate = useNavigate();
@@ -192,6 +193,7 @@ export const UserCard = () => {
           </S.Content>
         </S.Block>
       </S.Container>
+      ;
     </S.Browse>
   );
 };

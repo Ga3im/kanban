@@ -32,7 +32,7 @@ function App() {
           />
           <Routes>
             <Route element={<PrivateRoute isAuth={isAuth} />}>
-              <Route path={Router.main} element={<Main card={card} />}>
+              <Route path={Router.main} element={<Main card={card} setCard={setCard} />}>
                 <Route
                   path={Router.exit}
                   element={<Exit setIsAuth={setIsAuth} />}
@@ -41,7 +41,10 @@ function App() {
                   path={Router.CreateCard}
                   element={<CreateCard setCard={setCard} />}
                 />
-                <Route path={Router.UserCard} element={<UserCard card={card}/>} />
+                <Route
+                  path={Router.UserCard}
+                  element={<UserCard card={card} setCard={setCard} />}
+                />
               </Route>
             </Route>
             <Route
