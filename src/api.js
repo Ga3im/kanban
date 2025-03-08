@@ -6,16 +6,12 @@ export const getCards = async () => {
   return await fetch(baseUrl, {
     method: "GET",
     headers: { Authorization: `Bearer ${token}` },
-  })
-    .then((res) => {
-      if (res.status !== 200) {
-        throw new Error("Ошибка");
-      }
-      return res;
-    })
-    .then((res) => {
-      return res.json();
-    });
+  }).then((res) => {
+    if (res.status !== 200) {
+      throw new Error("Не удалось получить данные");
+    }
+    return res.json();
+  });
 };
 
 export const register = async ({ login, name, password }) => {
@@ -26,35 +22,40 @@ export const register = async ({ login, name, password }) => {
       name,
       password,
     }),
-  })
-    .then((res) => {
-      if (res.status === 400) {
-        throw new Error('error');
-        
+  }).then((res) => {
+    if (res.status === 400) {
+      if (name === "") {
+        throw new Error("Введите имя");
       }
-      return res;
-    })
-    .then((res) => {
-      return res.json();
-    })
-    .catch((error) => console.log(error.message));
+      if (login === "") {
+        throw new Error("Введите логин");
+      }
+      if (password === "") {
+        throw new Error("Введите пароль");
+      }
+      throw new Error("Пользователь с таким логином существует");
+    }
+    return res.json();
+  });
 };
 
 export const login = async ({ login, password }) => {
-  return await fetch("https://wedev-api.sky.pro/api/user", {
+  return await fetch("https://wedev-api.sky.pro/api/user/login", {
     method: "POST",
     body: JSON.stringify({
       login,
       password,
     }),
-  })
-    .then((res) => {
-      if (res.status !== 200) {
-        throw new Error("Ошибка");
+  }).then((res) => {
+    if (res.status === 400) {
+      if (login === "") {
+        throw new Error("Введите логин");
       }
-      return res;
-    })
-    .then((res) => {
-      return res.json();
-    });
+      if (password === "") {
+        throw new Error("Введите пароль");
+      }
+      throw new Error("Передан неправильный логин или пароль");
+    }
+    return res.json();
+  });
 };

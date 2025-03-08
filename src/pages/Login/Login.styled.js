@@ -89,6 +89,12 @@ export const Input = styled.input`
   }
 `;
 
+export const Error = styled.p`
+  color: red;
+  text-align: center;
+  padding-top: 10px;
+`;
+
 export const Button = styled.button`
   width: 100%;
   height: 30px;
@@ -109,6 +115,29 @@ export const Button = styled.button`
 
   &:hover {
     ${hover01}
+  }
+`;
+
+export const Buttonload = styled.button`
+  width: 100%;
+  height: 30px;
+  background-color: rgb(128, 128, 128);
+  border-radius: 4px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  border: none;
+  outline: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  line-height: 21px;
+  font-weight: 500;
+  letter-spacing: -0.14px;
+  color: #ffffff;
+
+  &:hover {
+    background-color: rgb(128, 128, 128);
   }
 `;
 

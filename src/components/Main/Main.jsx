@@ -6,6 +6,7 @@ import { Outlet } from "react-router-dom";
 
 export const Main = ({ card, setCard }) => {
   const [isloading, setIsLoading] = useState(true);
+  const [err, setErr] = useState("");
 
   const statusList = [
     "Без статуса",
@@ -27,11 +28,14 @@ export const Main = ({ card, setCard }) => {
       <S.Container>
         {isloading ? (
           <p>Loading</p>
+        ) : err ? (
+          <S.Error>{err}</S.Error>
         ) : (
           <S.Block>
             <S.Content>
               {statusList.map((status) => (
                 <Column
+                  setErr={setErr}
                   key={status}
                   setCard={setCard}
                   title={status}

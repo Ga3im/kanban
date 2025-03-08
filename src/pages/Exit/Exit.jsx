@@ -2,17 +2,21 @@ import { useNavigate } from "react-router-dom";
 import * as S from "./Exit.styled.js";
 import { Router } from "../routes.js";
 
-export const Exit = ({setIsAuth}) => {
+export const Exit = ({ setIsAuth }) => {
   const navigate = useNavigate();
+
   const logout = (e) => {
     e.preventDefault();
     navigate(Router.login);
     setIsAuth(false);
+    localStorage.clear();
   };
+
   const cancel = (e) => {
     e.preventDefault();
     navigate(Router.main);
   };
+
   return (
     <S.Exit>
       <S.Container>

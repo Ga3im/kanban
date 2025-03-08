@@ -13,6 +13,14 @@ export const Container = styled.div`
   padding: 0 30px;
 `;
 
+export const Error = styled.p`
+  color: red;
+  font-size: 30px;
+  text-align: center;
+  padding-bottom: 300px;
+  padding-top: 90px;
+`;
+
 export const Block = styled.div`
   width: 100%;
   margin: 0 auto;

@@ -3,10 +3,15 @@ import * as S from "./Login.styled.js";
 import { Router } from "../routes.js";
 import { login } from "../../api.js";
 import { useState } from "react";
+import { useUserContext } from "../../context/UserContext.jsx";
+
 export const Login = ({ setIsAuth }) => {
   const [loginInput, setLoginInput] = useState();
   const [passwordInput, setPasswordInput] = useState();
+  const [err, setErr] = useState("");
   const navigate = useNavigate();
+  const [isload, setIsLoad] = useState(false);
+  const { updateUser } = useUserContext();
 
   const goToRegister = (e) => {
     e.preventDefault();
@@ -15,12 +20,22 @@ export const Login = ({ setIsAuth }) => {
 
   const enterLogin = (e) => {
     e.preventDefault();
+    setIsLoad(true);
     login({
       login: loginInput,
       password: passwordInput,
-    });
-    setIsAuth(true);
-    navigate(Router.main);
+    })
+      .then((res) => {
+        updateUser(res.user);
+        console.log(res.user);
+        setIsLoad(false);
+        setIsAuth(true);
+        navigate(Router.main);
+      })
+      .catch((error) => {
+        setErr(error.message);
+        setIsLoad(false);
+      });
   };
 
   return (
@@ -44,7 +59,13 @@ export const Login = ({ setIsAuth }) => {
                 name="password"
                 placeholder="Пароль"
               />
-              <S.Button onClick={enterLogin}>Войти</S.Button>
+              <S.Error>{err}</S.Error>
+              {isload ? (
+                <S.Buttonload disabled>Загрузка...</S.Buttonload>
+              ) : (
+                <S.Button onClick={enterLogin}>Войти</S.Button>
+              )}
+
               <S.ModalGroup>
                 <p>Нужно зарегистрироваться?</p>
                 <span onClick={goToRegister}>Регистрируйтесь здесь</span>

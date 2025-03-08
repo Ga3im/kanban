@@ -55,6 +55,13 @@ export const AddButton = styled.button`
     ${hover01}
   }
 `;
+
+export const Image = styled.img`
+  width: 30px;
+  margin-right: 7px;
+  border-radius: 100%;
+`;
+
 export const User = styled.p`
   height: 20px;
   display: flex;

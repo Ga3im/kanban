@@ -159,7 +159,7 @@ export const CreateCard = ({ setCard }) => {
               <S.CatTitle>Категория</S.CatTitle>
               <S.CatThemes>
                 {categories.map((i) => (
-                  <S.CatTheme $cat={i}>
+                  <S.CatTheme $cat={i} key={i}>
                     <p>{i}</p>
                   </S.CatTheme>
                 ))}

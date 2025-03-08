@@ -1,14 +1,17 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getCards } from "../../api.js";
 import { Card } from "../Card/Card";
 import * as S from "./Column.styled.js";
 
-export const Column = ({ title, card, setCard }) => {
+export const Column = ({ title, card, setCard, setErr }) => {
   useEffect(() => {
-    getCards().then((tasks) => {
-      console.log(tasks.tasks);
-      setCard(tasks.tasks);
-    });
+    getCards()
+      .then((tasks) => {
+        setCard(tasks.tasks);
+      })
+      .catch((error) => {
+        setErr(error.message);
+      });
   }, []);
 
   return (

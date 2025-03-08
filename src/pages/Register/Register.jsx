@@ -3,14 +3,17 @@ import { Router } from "../routes.js";
 import { useNavigate } from "react-router-dom";
 import { login, register } from "../../api.js";
 import { useState } from "react";
+import { useUserContext } from "../../context/UserContext.jsx";
 
-export const Register = () => {
-  const [loginInput, setLoginInput] = useState();
-  const [nameInput, setNameInput] = useState();
-  const [passwordInput, setPasswordInput] = useState();
-  const [error, setError] = useState();
+export const Register = ({ setIsAuth }) => {
+  const [loginInput, setLoginInput] = useState("");
+  const [nameInput, setNameInput] = useState("");
+  const [passwordInput, setPasswordInput] = useState("");
+  const [err, setErr] = useState("");
+  const [load, setLoad] = useState(false);
   let navigate = useNavigate();
-  console.log(nameInput);
+  const { updateUser } = useUserContext();
+
   const goToLogin = (e) => {
     e.preventDefault();
     navigate(Router.login);
@@ -18,25 +21,32 @@ export const Register = () => {
 
   const enterRegiser = (e) => {
     e.preventDefault();
-    try {
-      register({
-        name: nameInput,
-        login: loginInput,
-        password: passwordInput,
+    setLoad(true);
+    register({
+      name: nameInput,
+      login: loginInput,
+      password: passwordInput,
+    })
+      .then((res) => {
+        login({
+          login: res.login,
+          password: res.password,
+        });
+        return res;
       })
-        .then(() => {     
-          setNameInput("");
-          setLoginInput("");
-          setPasswordInput("");
-           login({
-            login: loginInput,
-            password: passwordInput,
-          });
-        })
-        .then(() => navigate(Router.main));
-    } catch (error) {
-      setError(error.message);
-    }
+      .then((res) => {
+        updateUser(res.user);
+        setLoad(false);
+        setIsAuth(true);
+        navigate(Router.main);
+        setNameInput("");
+        setLoginInput("");
+        setPasswordInput("");
+      })
+      .catch((error) => {
+        setErr(error.message);
+        setLoad(false);
+      });
   };
 
   return (
@@ -69,8 +79,12 @@ export const Register = () => {
                 id="passwordFirst"
                 placeholder="Пароль"
               />
-              {error && <p>{error}</p>}
-              <S.Button onClick={enterRegiser}>Зарегистрироваться</S.Button>
+              <S.Error>{err}</S.Error>
+              {load ? (
+                <S.Buttonload disabled>Загрузка...</S.Buttonload>
+              ) : (
+                <S.Button onClick={enterRegiser}>Зарегистрироваться</S.Button>
+              )}
               <S.ModalGroup>
                 <p>
                   Уже есть аккаунт?{" "}
