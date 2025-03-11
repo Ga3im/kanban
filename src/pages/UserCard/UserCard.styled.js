@@ -27,7 +27,7 @@ export const Block = styled.div`
   display: block;
   margin: 0 auto;
   background-color: ${($prop) => $prop.theme.header};
-  max-width: 630px;
+  max-width: max-content;
   width: 100%;
   padding: 40px 30px 38px;
   border-radius: 10px;
@@ -88,6 +88,9 @@ export const StatusTheme = styled.div`
   margin-right: 7px;
   margin-bottom: 7px;
   background: #94a6be;
+  &:hover {
+    cursor: pointer;
+  }
   p {
     font-size: 14px;
     line-height: 1;
@@ -102,7 +105,7 @@ export const Wrap = styled.div`
 `;
 
 export const Form = styled.form`
-  max-width: 370px;
+  min-width: 370px;
   width: 100%;
   display: block;
   margin-bottom: 20px;
@@ -121,7 +124,8 @@ export const Label = styled.label`
 `;
 
 export const TextArea = styled.textarea`
-   max-width: 370px;
+  min-width: 500px;
+  min-height: 330px;
   width: 100%;
   outline: none;
   padding: 14px;

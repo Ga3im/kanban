@@ -1,14 +1,20 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import * as S from "./CreateCard.styled.js";
 import { Router } from "../routes.js";
 import { cardList } from "../../data.js";
+import { useState } from "react";
 
 export const CreateCard = ({ setCard }) => {
+  const [isCheked, setIsCheked] = useState("Web Design");
   const categories = ["Web Design", "Research", "Copywriting"];
   const navigate = useNavigate();
 
   const closeCreatPage = () => {
     navigate(Router.main);
+  };
+
+  const catCheck = (i) => {
+    console.log(i);
   };
 
   const addNewCArd = () => {
@@ -21,8 +27,7 @@ export const CreateCard = ({ setCard }) => {
         status: "Без статуса",
       })
     );
-    navigate(Router.main)
-
+    navigate(Router.main);
   };
   return (
     <S.Card>
@@ -159,7 +164,7 @@ export const CreateCard = ({ setCard }) => {
               <S.CatTitle>Категория</S.CatTitle>
               <S.CatThemes>
                 {categories.map((i) => (
-                  <S.CatTheme $cat={i} key={i}>
+                  <S.CatTheme onClick={catCheck()} $cat={i} key={i}>
                     <p>{i}</p>
                   </S.CatTheme>
                 ))}

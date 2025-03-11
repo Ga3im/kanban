@@ -29,6 +29,7 @@ export const Block = styled.div`
 
 export const Logo = styled.img`
   width: 115px;
+  cursor: pointer;
 `;
 
 export const Nav = styled.nav`

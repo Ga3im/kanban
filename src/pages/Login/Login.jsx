@@ -27,6 +27,7 @@ export const Login = ({ setIsAuth }) => {
     })
       .then((res) => {
         updateUser(res.user);
+        localStorage.setItem("user", JSON.stringify(res.user));
         console.log(res.user);
         setIsLoad(false);
         setIsAuth(true);

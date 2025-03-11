@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { cardList } from "./data";
+import { useEffect, useState } from "react";
 import "./App.css";
 import { Main } from "./components/Main/Main";
 import { darkTheme, GlobalStyle, lightTheme, Wrapper } from "./Global.styled";
@@ -16,13 +15,17 @@ import { CreateCard } from "./pages/CreateCard/CreateCard.jsx";
 import { UserCard } from "./pages/UserCard/UserCard.jsx";
 import { UserContext } from "./context/UserContext.jsx";
 import { CardContext } from "./context/CardContext.jsx";
+import { LoadingMainPage } from "./components/LoadingMainPage/LoadingMainPage.jsx";
+import { getCards } from "./api.js";
 
 function App() {
   const [theme, setTheme] = useState("light");
-  const [card, setCard] = useState(cardList);
-  const [isAuth, setIsAuth] = useState(false);
-  const [user, setUset] = useState("");
-  localStorage.setItem("user", JSON.stringify(user));
+  const [card, setCard] = useState([]);
+  const [user, setUset] = useState(JSON.parse(localStorage.getItem("user")));
+  const [isAuth, setIsAuth] = useState(user ? true : false);
+  const [isloading, setIsLoading] = useState(true);
+  const [err, setErr] = useState("");
+  const [task, setTask] = useState([]);
 
   const updateCard = (newCard) => {
     setCard(newCard);
@@ -32,6 +35,22 @@ function App() {
     setUset(newCard);
   };
 
+  useEffect(() => {
+    updateUser(JSON.parse(localStorage.getItem("user")));
+  }, []);
+
+  useEffect(() => {
+    getCards(user.token)
+      .then((tasks) => {
+        setIsLoading(false);
+        setCard(tasks.tasks);
+      })
+      .catch((error) => {
+        setIsLoading(false);
+        setErr(error.message);
+      });
+  }, []);
+
   return (
     <>
       <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
@@ -39,17 +58,26 @@ function App() {
           <CardContext.Provider value={{ card, updateCard }}>
             <GlobalStyle />
             <Wrapper>
-              <Header
-                isAuth={isAuth}
-                theme={theme}
-                setTheme={setTheme}
-                setCard={setCard}
-              />
+              <Header isAuth={isAuth} theme={theme} setTheme={setTheme} />
               <Routes>
                 <Route element={<PrivateRoute isAuth={isAuth} />}>
                   <Route
                     path={Router.main}
-                    element={<Main card={card} setCard={setCard} />}
+                    element={
+                      <>
+                        {isloading ? (
+                          <LoadingMainPage />
+                        ) : (
+                          <Main
+                          task={task}
+                            err={err}
+                            setErr={setErr}
+                            card={card}
+                            setCard={setCard}
+                          />
+                        )}
+                      </>
+                    }
                   >
                     <Route
                       path={Router.exit}
@@ -61,7 +89,9 @@ function App() {
                     />
                     <Route
                       path={Router.UserCard}
-                      element={<UserCard card={card} setCard={setCard} />}
+                      element={
+                        <UserCard task={task} setTask={setTask} />
+                      }
                     />
                   </Route>
                 </Route>

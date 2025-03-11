@@ -1,40 +1,30 @@
-import { useEffect, useState } from "react";
-import { cardList } from "../../data";
 import { Column } from "../Column/Column";
 import * as S from "./Main.styled.js";
 import { Outlet } from "react-router-dom";
 
-export const Main = ({ card, setCard }) => {
-  const [isloading, setIsLoading] = useState(true);
-  const [err, setErr] = useState("");
+export const statusList = [
+  "Без статуса",
+  "Нужно сделать",
+  "В работе",
+  "Тестирование",
+  "Готово",
+];
 
-  const statusList = [
-    "Без статуса",
-    "Нужно сделать",
-    "В работе",
-    "Тестирование",
-    "Готово",
-  ];
-
-  useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 500);
-  }, []);
-
+export const Main = ({task, err, setErr, card, setCard }) => {
   return (
     <S.Main>
       <Outlet />
       <S.Container>
-        {isloading ? (
-          <p>Loading</p>
-        ) : err ? (
-          <S.Error>{err}</S.Error>
+        {err ? (
+          <S.Error>
+            {err === "Failed to fetch" ? "Нет подключеня к интернету" : err}
+          </S.Error>
         ) : (
           <S.Block>
             <S.Content>
               {statusList.map((status) => (
                 <Column
+                  task={task}
                   setErr={setErr}
                   key={status}
                   setCard={setCard}

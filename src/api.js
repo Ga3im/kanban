@@ -1,8 +1,6 @@
 const baseUrl = "https://wedev-api.sky.pro/api/kanban";
 
-const token = "bgc0b8awbwas6g5g5k5o5s5w606g37w3cc3bo3b83k39s3co3c83c03ck";
-
-export const getCards = async () => {
+export const getCards = async (token) => {
   return await fetch(baseUrl, {
     method: "GET",
     headers: { Authorization: `Bearer ${token}` },
@@ -56,6 +54,17 @@ export const login = async ({ login, password }) => {
       }
       throw new Error("Передан неправильный логин или пароль");
     }
+    return res.json();
+  });
+};
+
+export const getUserTasks = async (id, token) => {
+  return await fetch(`${baseUrl}/${id}`, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }).then((res) => {
     return res.json();
   });
 };

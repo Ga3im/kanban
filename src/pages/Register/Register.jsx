@@ -36,6 +36,7 @@ export const Register = ({ setIsAuth }) => {
       })
       .then((res) => {
         updateUser(res.user);
+        localStorage.setItem("user", JSON.stringify(res.user));
         setLoad(false);
         setIsAuth(true);
         navigate(Router.main);

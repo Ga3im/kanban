@@ -9,6 +9,10 @@ export const Header = ({ isAuth, theme, setTheme }) => {
   const [isOpen, setIsOpen] = useState(false);
   const { user } = useUserContext();
 
+  const logo = () => {
+    navigate(Router.main);
+  };
+
   const handleOpen = () => {
     setIsOpen(!isOpen);
   };
@@ -36,9 +40,13 @@ export const Header = ({ isAuth, theme, setTheme }) => {
       <S.Container>
         <S.Block>
           {theme === "light" ? (
-            <S.Logo src="/public/logo.png" alt="logo"></S.Logo>
+            <S.Logo onClick={logo} src="/public/logo.png" alt="logo"></S.Logo>
           ) : (
-            <S.Logo src="/public/logo_dark.png" alt="logo"></S.Logo>
+            <S.Logo
+              onClick={logo}
+              src="/public/logo_dark.png"
+              alt="logo"
+            ></S.Logo>
           )}
           {isAuth ? (
             <S.Nav>

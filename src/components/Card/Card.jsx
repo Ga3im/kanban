@@ -1,34 +1,57 @@
 import { useNavigate } from "react-router-dom";
 import * as S from "./Card.styled.js";
+import { useState } from "react";
 
-export const Card = ({ card }) => {
+export const Card = ({ card, task }) => {
   const navigate = useNavigate();
+  const [currentCard, setCurrentCard] = useState(null);
+
+  const dragStart = () => {
+    setCurrentCard(card);
+  };
+
+  const dragEnd = (e) => {
+    e.preventDefault();
+    console.log("dragEnd");
+  };
+
+  const dragOver = () => {
+    console.log("Over");
+  };
+
+  const dragLeave = () => {
+    console.log("dragLeave");
+  };
 
   const openUserCard = (e) => {
     e.preventDefault();
-
-    navigate(`/card/:${card.id}`);
+    localStorage.setItem("date", task.date);
+    navigate(`/card/${card._id}`);
   };
+
   return (
-    <S.Cards onClick={openUserCard}>
+    <S.Cards>
       <S.CardItem>
-        <S.CardsCard>
+        <S.CardsCard
+          draggable
+          onDragStart={dragStart}
+          onDragEnd={dragEnd}
+          onClick={openUserCard}
+          onDragOver={dragOver}
+          onDragLeave={dragLeave}
+        >
           <S.Group>
             <S.CardTheme $color={card.topic}>
               <p>{card.topic}</p>
             </S.CardTheme>
-            <a href="#popBrowse" target="_self">
-              <S.CardBtn>
-                <div></div>
-                <div></div>
-                <div></div>
-              </S.CardBtn>
-            </a>
+            <S.CardBtn>
+              <div></div>
+              <div></div>
+              <div></div>
+            </S.CardBtn>
           </S.Group>
           <S.Content>
-            <a href="" target="_blank">
-              <S.Title>{card.title}</S.Title>
-            </a>
+            <S.Title>{card.title}</S.Title>
             <S.Date>
               <svg
                 xmlns="http://www.w3.org/2000/svg"

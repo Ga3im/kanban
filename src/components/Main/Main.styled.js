@@ -4,6 +4,7 @@ export const Main = styled.main`
   width: 100%;
   background-color: ${(prop) => prop.theme.mainBackground};
   transition: all 0.25s linear;
+  background: ${($bg) => $bg};
 `;
 
 export const Container = styled.div`
