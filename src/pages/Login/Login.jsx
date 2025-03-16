@@ -1,11 +1,11 @@
 import { useNavigate } from "react-router-dom";
 import * as S from "./Login.styled.js";
 import { Router } from "../routes.js";
-import { login } from "../../api.js";
+import { getCards, login } from "../../api.js";
 import { useState } from "react";
 import { useUserContext } from "../../context/UserContext.jsx";
 
-export const Login = ({ setIsAuth }) => {
+export const Login = ({ setIsAuth, setCard }) => {
   const [loginInput, setLoginInput] = useState();
   const [passwordInput, setPasswordInput] = useState();
   const [err, setErr] = useState("");
@@ -18,8 +18,7 @@ export const Login = ({ setIsAuth }) => {
     navigate(Router.register);
   };
 
-  const enterLogin = (e) => {
-    e.preventDefault();
+  const enterLogin = () => {
     setIsLoad(true);
     login({
       login: loginInput,
@@ -28,7 +27,6 @@ export const Login = ({ setIsAuth }) => {
       .then((res) => {
         updateUser(res.user);
         localStorage.setItem("user", JSON.stringify(res.user));
-        console.log(res.user);
         setIsLoad(false);
         setIsAuth(true);
         navigate(Router.main);

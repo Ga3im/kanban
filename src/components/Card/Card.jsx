@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import * as S from "./Card.styled.js";
 import { useState } from "react";
 
-export const Card = ({ card, task }) => {
+export const Card = ({ card }) => {
   const navigate = useNavigate();
   const [currentCard, setCurrentCard] = useState(null);
 
@@ -25,7 +25,6 @@ export const Card = ({ card, task }) => {
 
   const openUserCard = (e) => {
     e.preventDefault();
-    localStorage.setItem("date", task.date);
     navigate(`/card/${card._id}`);
   };
 
@@ -33,10 +32,10 @@ export const Card = ({ card, task }) => {
     <S.Cards>
       <S.CardItem>
         <S.CardsCard
+          onClick={openUserCard}
           draggable
           onDragStart={dragStart}
           onDragEnd={dragEnd}
-          onClick={openUserCard}
           onDragOver={dragOver}
           onDragLeave={dragLeave}
         >

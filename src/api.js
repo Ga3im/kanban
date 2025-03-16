@@ -68,3 +68,28 @@ export const getUserTasks = async (id, token) => {
     return res.json();
   });
 };
+
+export const addTask = async (
+  token,
+  title,
+  topic,
+  status,
+  description,
+  date
+) => {
+  return await fetch(`https://wedev-api.sky.pro/api/kanban`, {
+    method: "POST",
+    headers: { Authorization: `Bearer ${token}` },
+    body: JSON.stringify(title, topic, status, description, date),
+  }).then((res) => {
+    console.log(res);
+    return res.json();
+  });
+};
+
+export const deleteTask = async (id, token) => {
+  return await fetch(`https://wedev-api.sky.pro/api/kanban/${id}`, {
+    method: "DELETE",
+    headers: { Authorization: `Bearer ${token}` },
+  });
+};

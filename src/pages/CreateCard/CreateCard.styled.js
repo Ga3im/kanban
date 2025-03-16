@@ -59,7 +59,7 @@ export const Content = styled.div`
 `;
 
 export const Title = styled.div`
-  color:${($prop) => $prop.theme.text} ;
+  color: ${($prop) => $prop.theme.text};
   font-size: 20px;
   font-weight: 600;
   line-height: 24px;
@@ -74,6 +74,44 @@ export const Close = styled.a`
   cursor: pointer;
   &:hover {
     color: #000000;
+  }
+`;
+
+export const Status = styled.div`
+  margin-bottom: 11px;
+`;
+
+export const StatusP = styled.p`
+  margin-bottom: 14px;
+`;
+
+export const StatusThemes = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: flex-start;
+`;
+
+export const StatusTheme = styled.div`
+  border-radius: 24px;
+  border: 0.7px solid rgba(148, 166, 190, 0.4);
+  color: ${({ $selectStatus, $status }) =>
+    $selectStatus || $status ? " #fff;" : "#94a6be"};
+  padding: 11px 14px 10px;
+  margin-right: 7px;
+  margin-bottom: 7px;
+  background: ${({ $selectStatus, $status }) =>
+    $selectStatus || $status ? " #94a6be;" : ""}
+  &:hover {
+    cursor: pointer;
+  }
+  p {
+    font-size: 14px;
+    line-height: 1;
+    letter-spacing: -0.14px;
+      &:hover {
+    cursor: pointer;
+  }
   }
 `;
 

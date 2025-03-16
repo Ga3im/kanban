@@ -14,7 +14,6 @@ import { PrivateRoute } from "./components/PrivateRoute/PrivateRoute.jsx";
 import { CreateCard } from "./pages/CreateCard/CreateCard.jsx";
 import { UserCard } from "./pages/UserCard/UserCard.jsx";
 import { UserContext } from "./context/UserContext.jsx";
-import { CardContext } from "./context/CardContext.jsx";
 import { LoadingMainPage } from "./components/LoadingMainPage/LoadingMainPage.jsx";
 import { getCards } from "./api.js";
 
@@ -26,10 +25,8 @@ function App() {
   const [isloading, setIsLoading] = useState(true);
   const [err, setErr] = useState("");
   const [task, setTask] = useState([]);
-
-  const updateCard = (newCard) => {
-    setCard(newCard);
-  };
+  const [dis, setDis] = useState(true);
+  const [selected, setSelected] = useState(new Date());
 
   const updateUser = (newCard) => {
     setUset(newCard);
@@ -40,73 +37,89 @@ function App() {
   }, []);
 
   useEffect(() => {
-    getCards(user.token)
-      .then((tasks) => {
-        setIsLoading(false);
-        setCard(tasks.tasks);
-      })
-      .catch((error) => {
-        setIsLoading(false);
-        setErr(error.message);
-      });
-  }, []);
+    user &&
+      getCards(user.token)
+        .then((tasks) => {
+          setIsLoading(false);
+          setCard(tasks.tasks);
+          setDis(false);
+        })
+        .catch((error) => {
+          setIsLoading(false);
+          setDis(true);
+          setErr(error.message);
+        });
+  }, [user]);
 
   return (
     <>
       <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
         <UserContext.Provider value={{ user, updateUser }}>
-          <CardContext.Provider value={{ card, updateCard }}>
-            <GlobalStyle />
-            <Wrapper>
-              <Header isAuth={isAuth} theme={theme} setTheme={setTheme} />
-              <Routes>
-                <Route element={<PrivateRoute isAuth={isAuth} />}>
+          <GlobalStyle />
+          <Wrapper>
+            <Header
+              dis={dis}
+              isAuth={isAuth}
+              theme={theme}
+              setTheme={setTheme}
+            />
+            <Routes>
+              <Route element={<PrivateRoute isAuth={isAuth} />}>
+                <Route
+                  path={Router.main}
+                  element={
+                    <>
+                      {isloading ? (
+                        <LoadingMainPage />
+                      ) : (
+                        <Main
+                          err={err}
+                          setErr={setErr}
+                          card={card}
+                          setCard={setCard}
+                        />
+                      )}
+                    </>
+                  }
+                >
                   <Route
-                    path={Router.main}
+                    path={Router.exit}
+                    element={<Exit setIsAuth={setIsAuth} />}
+                  />
+                  <Route
+                    path={Router.CreateCard}
                     element={
-                      <>
-                        {isloading ? (
-                          <LoadingMainPage />
-                        ) : (
-                          <Main
-                          task={task}
-                            err={err}
-                            setErr={setErr}
-                            card={card}
-                            setCard={setCard}
-                          />
-                        )}
-                      </>
+                      <CreateCard
+                        selected={selected}
+                        setSelected={setSelected}
+                        setCard={setCard}
+                      />
                     }
-                  >
-                    <Route
-                      path={Router.exit}
-                      element={<Exit setIsAuth={setIsAuth} />}
-                    />
-                    <Route
-                      path={Router.CreateCard}
-                      element={<CreateCard setCard={setCard} />}
-                    />
-                    <Route
-                      path={Router.UserCard}
-                      element={
-                        <UserCard task={task} setTask={setTask} />
-                      }
-                    />
-                  </Route>
+                  />
+                  <Route
+                    path={Router.UserCard}
+                    element={
+                      <UserCard
+                        task={task}
+                        setTask={setTask}
+                        selected={selected}
+                        setSelected={setSelected}
+                      />
+                    }
+                  />
                 </Route>
-                <Route
-                  path={Router.login}
-                  element={<Login setIsAuth={setIsAuth} />}
-                />
-                <Route
-                  path={Router.register}
-                  element={<Register setIsAuth={setIsAuth} />}
-                />
-                <Route path={Router.notFound} element={<NotFound />} />
-              </Routes>
-            </Wrapper>
-          </CardContext.Provider>
+              </Route>
+              <Route
+                path={Router.login}
+                element={<Login setCard={setCard} setIsAuth={setIsAuth} />}
+              />
+              <Route
+                path={Router.register}
+                element={<Register setIsAuth={setIsAuth} />}
+              />
+              <Route path={Router.notFound} element={<NotFound />} />
+            </Routes>
+          </Wrapper>
         </UserContext.Provider>
       </ThemeProvider>
     </>

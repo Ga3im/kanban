@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Router } from "../../pages/routes.js";
 import { useUserContext } from "../../context/UserContext.jsx";
 
-export const Header = ({ isAuth, theme, setTheme }) => {
+export const Header = ({ dis, isAuth, theme, setTheme }) => {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const { user } = useUserContext();
@@ -50,9 +50,14 @@ export const Header = ({ isAuth, theme, setTheme }) => {
           )}
           {isAuth ? (
             <S.Nav>
-              <S.AddButton onClick={handleAddCard} id="btnMainNew">
-                Создать новую задачу
-              </S.AddButton>
+              {dis ? (
+                <S.AddButtonDisable> Создать новую задачу</S.AddButtonDisable>
+              ) : (
+                <S.AddButton onClick={handleAddCard}>
+                  Создать новую задачу
+                </S.AddButton>
+              )}
+
               <S.Image src={user.imageUrl} alt="" />
               <S.User $isOpen={isOpen} onClick={handleOpen}>
                 {user.name}

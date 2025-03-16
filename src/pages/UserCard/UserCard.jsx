@@ -6,11 +6,20 @@ import { getUserTasks } from "../../api.js";
 import { useUserContext } from "../../context/UserContext.jsx";
 import { Calendar } from "../../components/Calendar/Calendar.jsx";
 import { statusList } from "../../components/Main/Main.jsx";
+import { categories } from "../CreateCard/CreateCard.jsx";
 
-export const UserCard = ({ task, setTask }) => {
+export const UserCard = ({ task, setTask, setSelected }) => {
   const [isEdit, setIsEdit] = useState(false);
-  const [selected, setSelected] = useState(false);
+  const [selectStatus, setSelectStatus] = useState(task.status);
+  const [selectCat, setSelectCat] = useState(task.topic);
   const { user } = useUserContext(null);
+  const [edit, setEdit] = useState({
+    title: "Новая задача 2!",
+    topic: "Research",
+    status: "Без статуса",
+    description: "Подробное описание задачи",
+    date: "2024-01-07T16:26:18.179Z",
+  });
 
   let { cardId } = useParams();
   const navigate = useNavigate();
@@ -27,7 +36,6 @@ export const UserCard = ({ task, setTask }) => {
 
   const closeUserCard = () => {
     navigate(Router.main);
-    localStorage.removeItem("date");
   };
 
   const editCard = (e) => {
@@ -39,9 +47,11 @@ export const UserCard = ({ task, setTask }) => {
     e.preventDefault();
     setIsEdit(false);
   };
+  console.log(task);
 
-  const selectStatus = () => {
-    setSelected();
+  const onSelectStatus = (status) => {
+    setSelectStatus(status);
+    console.log(selectStatus);
   };
 
   return (
@@ -63,8 +73,9 @@ export const UserCard = ({ task, setTask }) => {
                     {statusList.map((i) => {
                       return (
                         <S.StatusTheme
-                          onClick={selectStatus}
-                          $selected={selected}
+                          key={i}
+                          $selectStatus={selectStatus === i}
+                          onClick={() => onSelectStatus(i)}
                         >
                           <p>{i}</p>
                         </S.StatusTheme>
@@ -83,19 +94,35 @@ export const UserCard = ({ task, setTask }) => {
                 <S.FormBlock>
                   <S.Label htmlFor="textArea01">Описание задачи</S.Label>
                   <S.TextArea
+                    onChange={(e) => setDescriptionText(e.target.value)}
                     name="text"
                     readOnly={isEdit ? false : true}
                     placeholder="Введите описание задачи..."
                   ></S.TextArea>
                 </S.FormBlock>
               </S.Form>
-              <Calendar date={task.date} />
+              <Calendar  selected={task.date ? task.date : new Date()} setSelected={setSelected}/>
             </S.Wrap>
             <S.ThemeDown>
               <S.Cat>Категория</S.Cat>
-              <S.Categories $topic={task.topic}>
-                <p>{task.topic}</p>
-              </S.Categories>
+              {isEdit ? (
+                categories.map((i) => {
+                  return (
+                    <S.Categories
+                      key={i}
+                      onClick={() => setSelectCat(i)}
+                      $selectCat={selectCat === i}
+                      $topic={i}
+                    >
+                      <p>{i}</p>
+                    </S.Categories>
+                  );
+                })
+              ) : (
+                <S.Categories $selectCat={task.topic} $topic={task.topic}>
+                  <p>{task.topic}</p>
+                </S.Categories>
+              )}
             </S.ThemeDown>
 
             {isEdit ? (
@@ -105,16 +132,9 @@ export const UserCard = ({ task, setTask }) => {
                     Сохранить
                   </S.CloseButton>
                   <S.Button onClick={cancelEdit}>Отменить</S.Button>
-                  <S.Button
-                    className="btn-edit__delete _btn-bor _hover03"
-                    id="btnDelete"
-                  >
-                    Удалить задачу
-                  </S.Button>
+                  <S.Button id="btnDelete">Удалить задачу</S.Button>
                 </S.BtnGroup>
-                <S.CloseButton className="btn-edit__close _btn-bg _hover01">
-                  Закрыть
-                </S.CloseButton>
+                <S.CloseButton onClick={closeUserCard}>Закрыть</S.CloseButton>
               </S.BtnBrowse>
             ) : (
               <S.BtnBrowse>

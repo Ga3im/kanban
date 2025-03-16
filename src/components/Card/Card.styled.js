@@ -42,7 +42,7 @@ export const CardsCard = styled.div`
   justify-content: stretch;
   padding: 15px 13px 19px;
   transition: all 0, 25s linear;
-  box-shadow: 0px 0px 20px -10px;
+  box-shadow: inset 0px 0px 20px -10px;
 
   @media screen and (max-width: 1200px) {
     width: 220px;

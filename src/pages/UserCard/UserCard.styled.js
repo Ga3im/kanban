@@ -62,6 +62,8 @@ export const Categories = styled.div`
   padding: 6px 20px;
   border-radius: 24px;
   margin-right: 7px;
+  cursor: pointer;
+  opacity: ${({ $selectCat }) => ($selectCat ? "1" : "0.4")};
   ${({ $topic }) => topicColor($topic)}
 `;
 
@@ -83,11 +85,13 @@ export const StatusThemes = styled.div`
 export const StatusTheme = styled.div`
   border-radius: 24px;
   border: 0.7px solid rgba(148, 166, 190, 0.4);
-  color: rgb(255, 255, 255);
+  color: ${({ $selectStatus, $status }) =>
+    $selectStatus || $status ? " #fff;" : "#94a6be"};
   padding: 11px 14px 10px;
   margin-right: 7px;
   margin-bottom: 7px;
-  background: #94a6be;
+  background: ${({ $selectStatus, $status }) =>
+    $selectStatus || $status ? " #94a6be;" : ""}
   &:hover {
     cursor: pointer;
   }
@@ -95,6 +99,9 @@ export const StatusTheme = styled.div`
     font-size: 14px;
     line-height: 1;
     letter-spacing: -0.14px;
+      &:hover {
+    cursor: pointer;
+  }
   }
 `;
 

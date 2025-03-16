@@ -10,7 +10,7 @@ export const statusList = [
   "Готово",
 ];
 
-export const Main = ({task, err, setErr, card, setCard }) => {
+export const Main = ({ err, setErr, card }) => {
   return (
     <S.Main>
       <Outlet />
@@ -24,10 +24,8 @@ export const Main = ({task, err, setErr, card, setCard }) => {
             <S.Content>
               {statusList.map((status) => (
                 <Column
-                  task={task}
                   setErr={setErr}
                   key={status}
-                  setCard={setCard}
                   title={status}
                   card={card.filter((i) => i.status === status)}
                 />

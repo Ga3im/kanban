@@ -1,12 +1,8 @@
 import * as S from "./Calendar.styled";
 import "react-day-picker/dist/style.css";
 import { format } from "date-fns";
-import { useState } from "react";
 
-export function Calendar({ date }) {
-
-  const [selected, setSelected] = useState(date ? date : new Date());
-
+export function Calendar({ selected, setSelected }) {
   return (
     <>
       <S.CalPos>
@@ -20,10 +16,10 @@ export function Calendar({ date }) {
         <S.P>
           Выберите срок исполнения:
           <div>
-            {new Date(selected) >= new Date() ? (
+            {new Date(selected) >= new Date() - new Date(24 * 3600 * 1000) ? (
               format(selected, "dd.MM.yyyy")
             ) : (
-              <p>{format(localStorage.getItem('date'), "dd.MM.yyyy")}</p>
+              <p>{format(selected, "dd.MM.yyyy")}</p>
             )}
           </div>
         </S.P>
