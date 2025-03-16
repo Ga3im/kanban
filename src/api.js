@@ -58,7 +58,7 @@ export const login = async ({ login, password }) => {
   });
 };
 
-export const getUserTasks = async (id, token) => {
+export const getUserTask = async (id, token) => {
   return await fetch(`${baseUrl}/${id}`, {
     method: "GET",
     headers: {
@@ -77,18 +77,31 @@ export const addTask = async (
   description,
   date
 ) => {
-  return await fetch(`https://wedev-api.sky.pro/api/kanban`, {
+  return await fetch(baseUrl, {
     method: "POST",
     headers: { Authorization: `Bearer ${token}` },
     body: JSON.stringify(title, topic, status, description, date),
   }).then((res) => {
-    console.log(res);
+    return res.json();
+  });
+};
+
+export const editTask = async (
+  id,
+  token,
+  { title, topic, status, description, date }
+) => {
+  return await fetch(`${baseUrl}/${id}`, {
+    method: "PUT",
+    headers: { Authorization: `Bearer ${token}` },
+    body: JSON.stringify({ status, topic, title, description, date }),
+  }).then((res) => {
     return res.json();
   });
 };
 
 export const deleteTask = async (id, token) => {
-  return await fetch(`https://wedev-api.sky.pro/api/kanban/${id}`, {
+  return await fetch(`${baseUrl}/${id}`, {
     method: "DELETE",
     headers: { Authorization: `Bearer ${token}` },
   }).then((res) => {

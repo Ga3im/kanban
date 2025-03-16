@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import * as S from "./CreateCard.styled.js";
 import { Router } from "../routes.js";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { addTask } from "../../api.js";
 import { useUserContext } from "../../context/UserContext.jsx";
 import { Calendar } from "../../components/Calendar/Calendar.jsx";
@@ -44,6 +44,10 @@ export const CreateCard = ({ setCard, selected, setSelected }) => {
     navigate(Router.main);
   };
 
+  useEffect(() => {
+    setAdd({ ...add, date: selected });
+  }, [selected]);
+
   return (
     <S.Card>
       <S.Container>
@@ -58,7 +62,7 @@ export const CreateCard = ({ setCard, selected, setSelected }) => {
                   return (
                     <S.StatusTheme
                       key={i}
-                      $selectStatus={i}
+                      $selectStatus={i === add.status}
                       onClick={() => onSelectStatus(i)}
                     >
                       <p>{i}</p>
@@ -98,7 +102,12 @@ export const CreateCard = ({ setCard, selected, setSelected }) => {
               <S.CatTitle>Категория</S.CatTitle>
               <S.CatThemes>
                 {categories.map((i) => (
-                  <S.CatTheme onClick={() => catCheck(i)} $cat={i} key={i}>
+                  <S.CatTheme
+                    $selectCat={add.topic === i}
+                    onClick={() => catCheck(i)}
+                    $cat={i}
+                    key={i}
+                  >
                     <p>{i}</p>
                   </S.CatTheme>
                 ))}

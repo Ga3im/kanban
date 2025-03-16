@@ -64,7 +64,7 @@ export const Categories = styled.div`
   margin-right: 7px;
   cursor: pointer;
   opacity: ${({ $selectCat }) => ($selectCat ? "1" : "0.4")};
-  ${({ $topic }) => topicColor($topic)}
+  ${({ $color }) => topicColor($color)}
 `;
 
 export const Status = styled.div`
@@ -85,13 +85,11 @@ export const StatusThemes = styled.div`
 export const StatusTheme = styled.div`
   border-radius: 24px;
   border: 0.7px solid rgba(148, 166, 190, 0.4);
-  color: ${({ $selectStatus, $status }) =>
-    $selectStatus || $status ? " #fff;" : "#94a6be"};
+  color: ${({ $selectStatus }) => ($selectStatus ? " #fff;" : "#94a6be")};
   padding: 11px 14px 10px;
   margin-right: 7px;
   margin-bottom: 7px;
-  background: ${({ $selectStatus, $status }) =>
-    $selectStatus || $status ? " #94a6be;" : ""}
+  background: ${({ $selectStatus }) => ($selectStatus ? " #94a6be;" : "")}
   &:hover {
     cursor: pointer;
   }

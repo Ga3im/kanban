@@ -4,10 +4,13 @@ export const MainColumn = styled.div`
   width: 20%;
   margin: 0 auto;
   display: block;
+  text-align: center;
+
   @media screen and (max-width: 1200px) {
     width: 100%;
     margin: 0 auto;
     display: block;
+    text-align: start;
   }
 `;
 

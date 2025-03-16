@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import * as S from "./Card.styled.js";
 import { useState } from "react";
+import { format } from "date-fns";
 
 export const Card = ({ card }) => {
   const navigate = useNavigate();
@@ -80,7 +81,7 @@ export const Card = ({ card }) => {
                   </clipPath>
                 </defs>
               </svg>
-              <p>{card.date}</p>
+              <p>{format(card.date, "dd.MM.yyyy")}</p>
             </S.Date>
           </S.Content>
         </S.CardsCard>

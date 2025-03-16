@@ -2,37 +2,37 @@ import { useNavigate, useParams } from "react-router-dom";
 import * as S from "./UserCard.styled.js";
 import { Router } from "../routes.js";
 import { useEffect, useState } from "react";
-import { getUserTasks, deleteTask } from "../../api.js";
+import { getUserTask, deleteTask, editTask, getCards } from "../../api.js";
 import { useUserContext } from "../../context/UserContext.jsx";
 import { Calendar } from "../../components/Calendar/Calendar.jsx";
 import { statusList } from "../../components/Main/Main.jsx";
 import { categories } from "../CreateCard/CreateCard.jsx";
 
-export const UserCard = ({ task, setTask, setSelected, setCard }) => {
+export const UserCard = ({ task, setTask, setSelected, selected, setCard }) => {
   const [isEdit, setIsEdit] = useState(false);
-  const [selectStatus, setSelectStatus] = useState(task.status);
-  const [selectCat, setSelectCat] = useState(task.topic);
   const { user } = useUserContext(null);
-  const [edit, setEdit] = useState({
-    title: "Новая задача 2!",
-    topic: "Research",
-    status: "Без статуса",
-    description: "Подробное описание задачи",
-    date: "2024-01-07T16:26:18.179Z",
-  });
 
   let { cardId } = useParams();
   const navigate = useNavigate();
 
   useEffect(() => {
-    getUserTasks(cardId, user.token)
+    getUserTask(cardId, user.token)
       .then((res) => {
         setTask(res.task);
+        setSelected(res.task.date);
       })
       .catch((error) => {
         console.log(error.message);
       });
   }, []);
+
+  const [edit, setEdit] = useState({
+    title: task.title,
+    topic: task.topic,
+    status: task.status,
+    description: task.description,
+    date: task.date,
+  });
 
   const closeUserCard = () => {
     navigate(Router.main);
@@ -43,13 +43,34 @@ export const UserCard = ({ task, setTask, setSelected, setCard }) => {
     setIsEdit(true);
   };
 
+  const saveEditButton = () => {
+    editTask(cardId, user.token, { ...edit }).then((res) => {
+      getCards(user.token).then((res) => {
+        setCard(res.tasks);
+      });
+      setIsEdit(false);
+    });
+  };
+
   const cancelEdit = (e) => {
     e.preventDefault();
     setIsEdit(false);
+    setEdit({
+      ...edit,
+      title: task.title,
+      topic: task.topic,
+      status: task.status,
+      description: task.description,
+      date: task.date,
+    });
   };
 
-  const onSelectStatus = (status) => {
-    setSelectStatus(status);
+  const onSelectStatus = (i) => {
+    setEdit({ ...edit, status: i });
+  };
+
+  const selectCat = (i) => {
+    setEdit({ ...edit, topic: i });
   };
 
   const deleteButton = () => {
@@ -66,7 +87,7 @@ export const UserCard = ({ task, setTask, setSelected, setCard }) => {
           <S.Content>
             <S.TopBlock>
               <S.Title>{task.title}</S.Title>
-              <S.Categories $topic={task.topic}>
+              <S.Categories $color={task.topic} $selectCat={task.topic}>
                 <p>{task.topic}</p>
               </S.Categories>
             </S.TopBlock>
@@ -79,7 +100,7 @@ export const UserCard = ({ task, setTask, setSelected, setCard }) => {
                       return (
                         <S.StatusTheme
                           key={i}
-                          $selectStatus={selectStatus === i}
+                          $selectStatus={edit.status === i}
                           onClick={() => onSelectStatus(i)}
                         >
                           <p>{i}</p>
@@ -88,7 +109,7 @@ export const UserCard = ({ task, setTask, setSelected, setCard }) => {
                     })}
                   </>
                 ) : (
-                  <S.StatusTheme $status={task.status}>
+                  <S.StatusTheme $selectStatus={task.status}>
                     <p>{task.status}</p>
                   </S.StatusTheme>
                 )}
@@ -99,17 +120,16 @@ export const UserCard = ({ task, setTask, setSelected, setCard }) => {
                 <S.FormBlock>
                   <S.Label htmlFor="textArea01">Описание задачи</S.Label>
                   <S.TextArea
-                    onChange={(e) => setDescriptionText(e.target.value)}
-                    name="text"
-                    readOnly={isEdit ? false : true}
+                    onChange={(e) =>
+                      setEdit({ ...edit, description: e.target.value })
+                    }
                     placeholder="Введите описание задачи..."
+                    value={edit.description}
+                    readOnly={isEdit ? false : true}
                   ></S.TextArea>
                 </S.FormBlock>
               </S.Form>
-              <Calendar
-                selected={task.date ? task.date : new Date()}
-                setSelected={setSelected}
-              />
+              <Calendar selected={selected} setSelected={setSelected} />
             </S.Wrap>
             <S.ThemeDown>
               <S.Cat>Категория</S.Cat>
@@ -118,16 +138,16 @@ export const UserCard = ({ task, setTask, setSelected, setCard }) => {
                   return (
                     <S.Categories
                       key={i}
-                      onClick={() => setSelectCat(i)}
-                      $selectCat={selectCat === i}
-                      $topic={i}
+                      $selectCat={edit.topic === i}
+                      $color={i}
+                      onClick={() => selectCat(i)}
                     >
                       <p>{i}</p>
                     </S.Categories>
                   );
                 })
               ) : (
-                <S.Categories $selectCat={task.topic} $topic={task.topic}>
+                <S.Categories $color={task.topic} $selectCat={task.topic}>
                   <p>{task.topic}</p>
                 </S.Categories>
               )}
@@ -136,7 +156,7 @@ export const UserCard = ({ task, setTask, setSelected, setCard }) => {
             {isEdit ? (
               <S.BtnBrowse>
                 <S.BtnGroup>
-                  <S.CloseButton className="btn-edit__edit _btn-bg _hover01">
+                  <S.CloseButton onClick={saveEditButton}>
                     Сохранить
                   </S.CloseButton>
                   <S.Button onClick={cancelEdit}>Отменить</S.Button>

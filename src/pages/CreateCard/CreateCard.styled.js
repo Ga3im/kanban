@@ -45,7 +45,7 @@ export const Block = styled.div`
   display: block;
   margin: 0 auto;
   background-color: ${($prop) => $prop.theme.header};
-  max-width: 630px;
+  max-width: 770px;
   width: 100%;
   padding: 40px 30px 48px;
   border-radius: 10px;
@@ -170,6 +170,7 @@ export const Input = styled.input`
 
 export const TextArea = styled.textarea`
   width: 100%;
+  min-width: 370px;
   outline: none;
   padding: 14px;
   background: transparent;
@@ -221,7 +222,7 @@ export const CatTheme = styled.div`
   padding: 8px 20px;
   border-radius: 24px;
   margin-right: 7px;
-  opacity: 0.4;
+  opacity: ${({ $selectCat }) => ($selectCat ? "1" : "0.4")};
   cursor: pointer;
 
   ${({ $cat }) => catColor($cat)}
