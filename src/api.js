@@ -91,5 +91,7 @@ export const deleteTask = async (id, token) => {
   return await fetch(`https://wedev-api.sky.pro/api/kanban/${id}`, {
     method: "DELETE",
     headers: { Authorization: `Bearer ${token}` },
+  }).then((res) => {
+    return res.json();
   });
 };

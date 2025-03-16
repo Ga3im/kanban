@@ -102,6 +102,7 @@ function App() {
                       <UserCard
                         task={task}
                         setTask={setTask}
+                        setCard={setCard}
                         selected={selected}
                         setSelected={setSelected}
                       />

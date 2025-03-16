@@ -2,13 +2,13 @@ import { useNavigate, useParams } from "react-router-dom";
 import * as S from "./UserCard.styled.js";
 import { Router } from "../routes.js";
 import { useEffect, useState } from "react";
-import { getUserTasks } from "../../api.js";
+import { getUserTasks, deleteTask } from "../../api.js";
 import { useUserContext } from "../../context/UserContext.jsx";
 import { Calendar } from "../../components/Calendar/Calendar.jsx";
 import { statusList } from "../../components/Main/Main.jsx";
 import { categories } from "../CreateCard/CreateCard.jsx";
 
-export const UserCard = ({ task, setTask, setSelected }) => {
+export const UserCard = ({ task, setTask, setSelected, setCard }) => {
   const [isEdit, setIsEdit] = useState(false);
   const [selectStatus, setSelectStatus] = useState(task.status);
   const [selectCat, setSelectCat] = useState(task.topic);
@@ -47,11 +47,16 @@ export const UserCard = ({ task, setTask, setSelected }) => {
     e.preventDefault();
     setIsEdit(false);
   };
-  console.log(task);
 
   const onSelectStatus = (status) => {
     setSelectStatus(status);
-    console.log(selectStatus);
+  };
+
+  const deleteButton = () => {
+    deleteTask(cardId, user.token).then((res) => {
+      setCard(res.tasks);
+      navigate(Router.main);
+    });
   };
 
   return (
@@ -101,7 +106,10 @@ export const UserCard = ({ task, setTask, setSelected }) => {
                   ></S.TextArea>
                 </S.FormBlock>
               </S.Form>
-              <Calendar  selected={task.date ? task.date : new Date()} setSelected={setSelected}/>
+              <Calendar
+                selected={task.date ? task.date : new Date()}
+                setSelected={setSelected}
+              />
             </S.Wrap>
             <S.ThemeDown>
               <S.Cat>Категория</S.Cat>
@@ -132,7 +140,7 @@ export const UserCard = ({ task, setTask, setSelected }) => {
                     Сохранить
                   </S.CloseButton>
                   <S.Button onClick={cancelEdit}>Отменить</S.Button>
-                  <S.Button id="btnDelete">Удалить задачу</S.Button>
+                  <S.Button onClick={deleteButton}>Удалить задачу</S.Button>
                 </S.BtnGroup>
                 <S.CloseButton onClick={closeUserCard}>Закрыть</S.CloseButton>
               </S.BtnBrowse>
@@ -140,7 +148,7 @@ export const UserCard = ({ task, setTask, setSelected }) => {
               <S.BtnBrowse>
                 <S.BtnGroup>
                   <S.Button onClick={editCard}>Редактировать задачу</S.Button>
-                  <S.Button>Удалить задачу</S.Button>
+                  <S.Button onClick={deleteButton}>Удалить задачу</S.Button>
                 </S.BtnGroup>
                 <S.CloseButton onClick={closeUserCard}>Закрыть</S.CloseButton>
               </S.BtnBrowse>
