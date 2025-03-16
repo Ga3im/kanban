@@ -132,6 +132,7 @@ export const TextArea = styled.textarea`
   min-width: 500px;
   min-height: 330px;
   width: 100%;
+  color:  ${($prop) => $prop.theme.text};
   outline: none;
   padding: 14px;
   background: ${($prop) => $prop.theme.mainBackground};

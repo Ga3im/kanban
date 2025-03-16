@@ -144,6 +144,7 @@ export const Input = styled.input`
   width: 100%;
   outline: none;
   padding: 14px;
+  color: ${($prop) => $prop.theme.text};
   background: transparent;
   border: 0.7px solid rgba(148, 166, 190, 0.4);
   border-radius: 8px;
@@ -173,6 +174,7 @@ export const TextArea = styled.textarea`
   min-width: 370px;
   outline: none;
   padding: 14px;
+  color: ${($prop) => $prop.theme.text};
   background: transparent;
   border: 0.7px solid rgba(148, 166, 190, 0.4);
   border-radius: 8px;

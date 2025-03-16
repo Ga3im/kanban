@@ -63,6 +63,8 @@ export const Input = styled.input`
   width: 100%;
   min-width: 100%;
   border-radius: 8px;
+  color: ${($prop) => $prop.theme.text};
+
   border: 0.7px solid rgba(148, 166, 190, 0.4);
   outline: none;
   padding: 10px 8px;
