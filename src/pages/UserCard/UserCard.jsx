@@ -11,28 +11,28 @@ import { categories } from "../CreateCard/CreateCard.jsx";
 export const UserCard = ({ task, setTask, setSelected, selected, setCard }) => {
   const [isEdit, setIsEdit] = useState(false);
   const { user } = useUserContext(null);
-
   let { cardId } = useParams();
   const navigate = useNavigate();
+  const [edit, setEdit] = useState({});
 
   useEffect(() => {
     getUserTask(cardId, user.token)
       .then((res) => {
         setTask(res.task);
         setSelected(res.task.date);
+        setEdit({
+          ...edit,
+          title: res.task.title,
+          topic: res.task.topic,
+          status: res.task.status,
+          description: res.task.description,
+          date: res.task.date,
+        });
       })
       .catch((error) => {
         console.log(error.message);
       });
   }, []);
-
-  const [edit, setEdit] = useState({
-    title: task.title,
-    topic: task.topic,
-    status: task.status,
-    description: task.description,
-    date: task.date,
-  });
 
   const closeUserCard = () => {
     navigate(Router.main);
