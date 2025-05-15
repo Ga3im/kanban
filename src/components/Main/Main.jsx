@@ -1,37 +1,33 @@
-import { useEffect, useState } from "react";
-import { cardList } from "../../data";
 import { Column } from "../Column/Column";
 import * as S from "./Main.styled.js";
 import { Outlet } from "react-router-dom";
 
-export const Main = () => {
-  const [isloading, setIsLoading] = useState(true);
-  const statusList = [
-    "Без статуса",
-    "Нужно сделать",
-    "В работе",
-    "Тестирование",
-    "Готово",
-  ];
-  useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 500);
-  }, []);
+export const statusList = [
+  "Без статуса",
+  "Нужно сделать",
+  "В работе",
+  "Тестирование",
+  "Готово",
+];
+
+export const Main = ({ err, setErr, card }) => {
   return (
     <S.Main>
-      <Outlet/>
+      <Outlet />
       <S.Container>
-        {isloading ? (
-          <p>Loading</p>
+        {err ? (
+          <S.Error>
+            {err === "Failed to fetch" ? "Нет подключеня к интернету" : err}
+          </S.Error>
         ) : (
           <S.Block>
             <S.Content>
               {statusList.map((status) => (
                 <Column
+                  setErr={setErr}
                   key={status}
                   title={status}
-                  cardList={cardList.filter((i) => i.status === status)}
+                  card={card.filter((i) => i.status === status)}
                 />
               ))}
             </S.Content>
@@ -39,6 +35,5 @@ export const Main = () => {
         )}
       </S.Container>
     </S.Main>
-    
   );
 };

@@ -6,7 +6,7 @@ export const Wrapper = styled.div`
   height: 100%;
   overflow-x: hidden;
   overflow-y: scroll;
-  background-color: #eaeef6;
+  background-color: ${($prop) => $prop.theme.mainBackground};
 `;
 
 export const Container = styled.div`
@@ -30,7 +30,7 @@ export const Modal = styled.div`
 export const BlockModal = styled.div`
   display: block;
   margin: 0 auto;
-  background-color: #ffffff;
+  background-color: ${($prop) => $prop.theme.header};
   max-width: 368px;
   width: 100%;
   padding: 50px 60px;
@@ -66,6 +66,8 @@ export const Input = styled.input`
   width: 100%;
   min-width: 100%;
   border-radius: 8px;
+  background: transparent;
+  color: ${($prop) => $prop.theme.text};
   border: 0.7px solid rgba(148, 166, 190, 0.4);
   outline: none;
   padding: 10px 8px;
@@ -88,6 +90,12 @@ export const Input = styled.input`
   }
 `;
 
+export const Error = styled.p`
+  color: red;
+  text-align: center;
+  padding-top: 10px;
+`;
+
 export const Button = styled.button`
   width: 100%;
   height: 30px;
@@ -108,6 +116,29 @@ export const Button = styled.button`
 
   &:hover {
     ${hover01}
+  }
+`;
+
+export const Buttonload = styled.button`
+  width: 100%;
+  height: 30px;
+  background-color: rgb(128, 128, 128);
+  border-radius: 4px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  border: none;
+  outline: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  line-height: 21px;
+  font-weight: 500;
+  letter-spacing: -0.14px;
+  color: #ffffff;
+
+  &:hover {
+    background-color: rgb(128, 128, 128);
   }
 `;
 

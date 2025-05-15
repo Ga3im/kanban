@@ -44,8 +44,8 @@ export const Container = styled.div`
 export const Block = styled.div`
   display: block;
   margin: 0 auto;
-  background-color: #ffffff;
-  max-width: 630px;
+  background-color: ${($prop) => $prop.theme.header};
+  max-width: 770px;
   width: 100%;
   padding: 40px 30px 48px;
   border-radius: 10px;
@@ -59,7 +59,7 @@ export const Content = styled.div`
 `;
 
 export const Title = styled.div`
-  color: #000;
+  color: ${($prop) => $prop.theme.text};
   font-size: 20px;
   font-weight: 600;
   line-height: 24px;
@@ -74,6 +74,44 @@ export const Close = styled.a`
   cursor: pointer;
   &:hover {
     color: #000000;
+  }
+`;
+
+export const Status = styled.div`
+  margin-bottom: 11px;
+`;
+
+export const StatusP = styled.p`
+  margin-bottom: 14px;
+`;
+
+export const StatusThemes = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: flex-start;
+`;
+
+export const StatusTheme = styled.div`
+  border-radius: 24px;
+  border: 0.7px solid rgba(148, 166, 190, 0.4);
+  color: ${({ $selectStatus, $status }) =>
+    $selectStatus || $status ? " #fff;" : "#94a6be"};
+  padding: 11px 14px 10px;
+  margin-right: 7px;
+  margin-bottom: 7px;
+  background: ${({ $selectStatus, $status }) =>
+    $selectStatus || $status ? " #94a6be;" : ""}
+  &:hover {
+    cursor: pointer;
+  }
+  p {
+    font-size: 14px;
+    line-height: 1;
+    letter-spacing: -0.14px;
+      &:hover {
+    cursor: pointer;
+  }
   }
 `;
 
@@ -96,7 +134,7 @@ export const FormBlock = styled.div`
 `;
 
 export const Label = styled.label`
-  color: #000;
+  color: ${($prop) => $prop.theme.text};
   font-size: 14px;
   font-weight: 600;
   line-height: 1;
@@ -106,6 +144,7 @@ export const Input = styled.input`
   width: 100%;
   outline: none;
   padding: 14px;
+  color: ${($prop) => $prop.theme.text};
   background: transparent;
   border: 0.7px solid rgba(148, 166, 190, 0.4);
   border-radius: 8px;
@@ -132,8 +171,10 @@ export const Input = styled.input`
 
 export const TextArea = styled.textarea`
   width: 100%;
+  min-width: 370px;
   outline: none;
   padding: 14px;
+  color: ${($prop) => $prop.theme.text};
   background: transparent;
   border: 0.7px solid rgba(148, 166, 190, 0.4);
   border-radius: 8px;
@@ -183,7 +224,7 @@ export const CatTheme = styled.div`
   padding: 8px 20px;
   border-radius: 24px;
   margin-right: 7px;
-  opacity: 0.4;
+  opacity: ${({ $selectCat }) => ($selectCat ? "1" : "0.4")};
   cursor: pointer;
 
   ${({ $cat }) => catColor($cat)}
@@ -209,5 +250,5 @@ export const Button = styled.button`
   line-height: 1;
   color: #ffffff;
   float: right;
-  &: ${hover01};
+  ${hover01};
 `;

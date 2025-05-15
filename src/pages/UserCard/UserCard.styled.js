@@ -26,12 +26,12 @@ export const Container = styled.div`
 export const Block = styled.div`
   display: block;
   margin: 0 auto;
-  background-color: #ffffff;
-  max-width: 630px;
+  background-color: ${($prop) => $prop.theme.header};
+  max-width: max-content;
   width: 100%;
   padding: 40px 30px 38px;
   border-radius: 10px;
-  border: 0.7px solid #d4dbe5;
+  border: 0.7px solid ${($prop) => $prop.theme.border};
   position: relative;
 `;
 
@@ -49,7 +49,7 @@ export const TopBlock = styled.div`
 `;
 
 export const Title = styled.div`
-  color: #000;
+  color: ${($prop) => $prop.theme.text};
   font-size: 20px;
   font-weight: 600;
   line-height: 24px;
@@ -62,8 +62,9 @@ export const Categories = styled.div`
   padding: 6px 20px;
   border-radius: 24px;
   margin-right: 7px;
-  opacity: 1;
-  ${({ $topic }) => topicColor($topic)}
+  cursor: pointer;
+  opacity: ${({ $selectCat }) => ($selectCat ? "1" : "0.4")};
+  ${({ $color }) => topicColor($color)}
 `;
 
 export const Status = styled.div`
@@ -84,15 +85,21 @@ export const StatusThemes = styled.div`
 export const StatusTheme = styled.div`
   border-radius: 24px;
   border: 0.7px solid rgba(148, 166, 190, 0.4);
-  color: rgb(255, 255, 255);
+  color: ${({ $selectStatus }) => ($selectStatus ? " #fff;" : "#94a6be")};
   padding: 11px 14px 10px;
   margin-right: 7px;
   margin-bottom: 7px;
-  background: #94a6be;
+  background: ${({ $selectStatus }) => ($selectStatus ? " #94a6be;" : "")}
+  &:hover {
+    cursor: pointer;
+  }
   p {
     font-size: 14px;
     line-height: 1;
     letter-spacing: -0.14px;
+      &:hover {
+    cursor: pointer;
+  }
   }
 `;
 
@@ -103,7 +110,7 @@ export const Wrap = styled.div`
 `;
 
 export const Form = styled.form`
-  max-width: 370px;
+  min-width: 370px;
   width: 100%;
   display: block;
   margin-bottom: 20px;
@@ -122,11 +129,13 @@ export const Label = styled.label`
 `;
 
 export const TextArea = styled.textarea`
-   max-width: 370px;
+  min-width: 500px;
+  min-height: 330px;
   width: 100%;
+  color:  ${($prop) => $prop.theme.text};
   outline: none;
   padding: 14px;
-  background: #eaeef6;
+  background: ${($prop) => $prop.theme.mainBackground};
   border: 0.7px solid rgba(148, 166, 190, 0.4);
   border-radius: 8px;
   font-size: 14px;
@@ -179,7 +188,7 @@ export const Button = styled.button`
   border: 0.7px solid var(--palette-navy-60, #565eef);
   outline: none;
   background: transparent;
-  color: #565eef;
+  color: ${($prop) => $prop.theme.userName};
   margin-right: 8px;
   padding: 6px 10px;
 

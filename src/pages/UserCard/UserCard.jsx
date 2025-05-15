@@ -1,12 +1,38 @@
 import { useNavigate, useParams } from "react-router-dom";
 import * as S from "./UserCard.styled.js";
 import { Router } from "../routes.js";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { getUserTask, deleteTask, editTask, getCards } from "../../api.js";
+import { useUserContext } from "../../context/UserContext.jsx";
+import { Calendar } from "../../components/Calendar/Calendar.jsx";
+import { statusList } from "../../components/Main/Main.jsx";
+import { categories } from "../CreateCard/CreateCard.jsx";
 
-export const UserCard = () => {
+export const UserCard = ({ task, setTask, setSelected, selected, setCard }) => {
   const [isEdit, setIsEdit] = useState(false);
+  const { user } = useUserContext(null);
   let { cardId } = useParams();
   const navigate = useNavigate();
+  const [edit, setEdit] = useState({});
+
+  useEffect(() => {
+    getUserTask(cardId, user.token)
+      .then((res) => {
+        setTask(res.task);
+        setSelected(res.task.date);
+        setEdit({
+          ...edit,
+          title: res.task.title,
+          topic: res.task.topic,
+          status: res.task.status,
+          description: res.task.description,
+          date: res.task.date,
+        });
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+  }, []);
 
   const closeUserCard = () => {
     navigate(Router.main);
@@ -17,9 +43,41 @@ export const UserCard = () => {
     setIsEdit(true);
   };
 
+  const saveEditButton = () => {
+    editTask(cardId, user.token, { ...edit }).then((res) => {
+      getCards(user.token).then((res) => {
+        setCard(res.tasks);
+      });
+      setIsEdit(false);
+    });
+  };
+
   const cancelEdit = (e) => {
     e.preventDefault();
     setIsEdit(false);
+    setEdit({
+      ...edit,
+      title: task.title,
+      topic: task.topic,
+      status: task.status,
+      description: task.description,
+      date: task.date,
+    });
+  };
+
+  const onSelectStatus = (i) => {
+    setEdit({ ...edit, status: i });
+  };
+
+  const selectCat = (i) => {
+    setEdit({ ...edit, topic: i });
+  };
+
+  const deleteButton = () => {
+    deleteTask(cardId, user.token).then((res) => {
+      setCard(res.tasks);
+      navigate(Router.main);
+    });
   };
 
   return (
@@ -28,17 +86,33 @@ export const UserCard = () => {
         <S.Block>
           <S.Content>
             <S.TopBlock>
-              <S.Title> Название задачи{cardId}</S.Title>
-              <S.Categories $topic={"Web Design"}>
-                <p>Web Design</p>
+              <S.Title>{task.title}</S.Title>
+              <S.Categories $color={task.topic} $selectCat={task.topic}>
+                <p>{task.topic}</p>
               </S.Categories>
             </S.TopBlock>
             <S.Status>
               <S.StatusP>Статус</S.StatusP>
               <S.StatusThemes>
-                <S.StatusTheme $status={"Без статуса"}>
-                  <p>Без статуса</p>
-                </S.StatusTheme>
+                {isEdit ? (
+                  <>
+                    {statusList.map((i) => {
+                      return (
+                        <S.StatusTheme
+                          key={i}
+                          $selectStatus={edit.status === i}
+                          onClick={() => onSelectStatus(i)}
+                        >
+                          <p>{i}</p>
+                        </S.StatusTheme>
+                      );
+                    })}
+                  </>
+                ) : (
+                  <S.StatusTheme $selectStatus={task.status}>
+                    <p>{task.status}</p>
+                  </S.StatusTheme>
+                )}
               </S.StatusThemes>
             </S.Status>
             <S.Wrap>
@@ -46,145 +120,55 @@ export const UserCard = () => {
                 <S.FormBlock>
                   <S.Label htmlFor="textArea01">Описание задачи</S.Label>
                   <S.TextArea
-                    name="text"
-                    readOnly
+                    onChange={(e) =>
+                      setEdit({ ...edit, description: e.target.value })
+                    }
                     placeholder="Введите описание задачи..."
+                    value={edit.description}
+                    readOnly={isEdit ? false : true}
                   ></S.TextArea>
                 </S.FormBlock>
               </S.Form>
-              <div className="pop-new-card__calendar calendar">
-                <p className="calendar__ttl subttl">Даты</p>
-                <div className="calendar__block">
-                  <div className="calendar__nav">
-                    <div className="calendar__month">Сентябрь 2023</div>
-                    <div className="nav__actions">
-                      <div className="nav__action" data-action="prev">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="6"
-                          height="11"
-                          viewBox="0 0 6 11"
-                        >
-                          <path d="M5.72945 1.95273C6.09018 1.62041 6.09018 1.0833 5.72945 0.750969C5.36622 0.416344 4.7754 0.416344 4.41218 0.750969L0.528487 4.32883C-0.176162 4.97799 -0.176162 6.02201 0.528487 6.67117L4.41217 10.249C4.7754 10.5837 5.36622 10.5837 5.72945 10.249C6.09018 9.9167 6.09018 9.37959 5.72945 9.04727L1.87897 5.5L5.72945 1.95273Z" />
-                        </svg>
-                      </div>
-                      <div className="nav__action" data-action="next">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="6"
-                          height="11"
-                          viewBox="0 0 6 11"
-                        >
-                          <path d="M0.27055 9.04727C-0.0901833 9.37959 -0.0901832 9.9167 0.27055 10.249C0.633779 10.5837 1.2246 10.5837 1.58783 10.249L5.47151 6.67117C6.17616 6.02201 6.17616 4.97799 5.47151 4.32883L1.58782 0.75097C1.2246 0.416344 0.633778 0.416344 0.270549 0.75097C-0.0901831 1.0833 -0.090184 1.62041 0.270549 1.95273L4.12103 5.5L0.27055 9.04727Z" />
-                        </svg>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="calendar__content">
-                    <div className="calendar__days-names">
-                      <div className="calendar__day-name">пн</div>
-                      <div className="calendar__day-name">вт</div>
-                      <div className="calendar__day-name">ср</div>
-                      <div className="calendar__day-name">чт</div>
-                      <div className="calendar__day-name">пт</div>
-                      <div className="calendar__day-name -weekend-">сб</div>
-                      <div className="calendar__day-name -weekend-">вс</div>
-                    </div>
-                    <div className="calendar__cells">
-                      <div className="calendar__cell _other-month">28</div>
-                      <div className="calendar__cell _other-month">29</div>
-                      <div className="calendar__cell _other-month">30</div>
-                      <div className="calendar__cell _cell-day">31</div>
-                      <div className="calendar__cell _cell-day">1</div>
-                      <div className="calendar__cell _cell-day _weekend">2</div>
-                      <div className="calendar__cell _cell-day _weekend">3</div>
-                      <div className="calendar__cell _cell-day">4</div>
-                      <div className="calendar__cell _cell-day">5</div>
-                      <div className="calendar__cell _cell-day ">6</div>
-                      <div className="calendar__cell _cell-day">7</div>
-                      <div className="calendar__cell _cell-day _current">8</div>
-                      <div className="calendar__cell _cell-day _weekend _active-day">
-                        9
-                      </div>
-                      <div className="calendar__cell _cell-day _weekend">
-                        10
-                      </div>
-                      <div className="calendar__cell _cell-day">11</div>
-                      <div className="calendar__cell _cell-day">12</div>
-                      <div className="calendar__cell _cell-day">13</div>
-                      <div className="calendar__cell _cell-day">14</div>
-                      <div className="calendar__cell _cell-day">15</div>
-                      <div className="calendar__cell _cell-day _weekend">
-                        16
-                      </div>
-                      <div className="calendar__cell _cell-day _weekend">
-                        17
-                      </div>
-                      <div className="calendar__cell _cell-day">18</div>
-                      <div className="calendar__cell _cell-day">19</div>
-                      <div className="calendar__cell _cell-day">20</div>
-                      <div className="calendar__cell _cell-day">21</div>
-                      <div className="calendar__cell _cell-day">22</div>
-                      <div className="calendar__cell _cell-day _weekend">
-                        23
-                      </div>
-                      <div className="calendar__cell _cell-day _weekend">
-                        24
-                      </div>
-                      <div className="calendar__cell _cell-day">25</div>
-                      <div className="calendar__cell _cell-day">26</div>
-                      <div className="calendar__cell _cell-day">27</div>
-                      <div className="calendar__cell _cell-day">28</div>
-                      <div className="calendar__cell _cell-day">29</div>
-                      <div className="calendar__cell _cell-day _weekend">
-                        30
-                      </div>
-                      <div className="calendar__cell _other-month _weekend">
-                        1
-                      </div>
-                    </div>
-                  </div>
-
-                  <input type="hidden" id="datepick_value" value="08.09.2023" />
-                  <div className="calendar__period">
-                    <p className="calendar__p date-end">
-                      Срок исполнения:{" "}
-                      <span className="date-control">09.09.23</span>
-                    </p>
-                  </div>
-                </div>
-              </div>
+              <Calendar selected={selected} setSelected={setSelected} />
             </S.Wrap>
             <S.ThemeDown>
               <S.Cat>Категория</S.Cat>
-              <S.Categories $topic={"Web Design"}>
-                <p>Web Design</p>
-              </S.Categories>
+              {isEdit ? (
+                categories.map((i) => {
+                  return (
+                    <S.Categories
+                      key={i}
+                      $selectCat={edit.topic === i}
+                      $color={i}
+                      onClick={() => selectCat(i)}
+                    >
+                      <p>{i}</p>
+                    </S.Categories>
+                  );
+                })
+              ) : (
+                <S.Categories $color={task.topic} $selectCat={task.topic}>
+                  <p>{task.topic}</p>
+                </S.Categories>
+              )}
             </S.ThemeDown>
 
             {isEdit ? (
               <S.BtnBrowse>
                 <S.BtnGroup>
-                  <S.CloseButton className="btn-edit__edit _btn-bg _hover01">
+                  <S.CloseButton onClick={saveEditButton}>
                     Сохранить
                   </S.CloseButton>
                   <S.Button onClick={cancelEdit}>Отменить</S.Button>
-                  <S.Button
-                    className="btn-edit__delete _btn-bor _hover03"
-                    id="btnDelete"
-                  >
-                    Удалить задачу
-                  </S.Button>
+                  <S.Button onClick={deleteButton}>Удалить задачу</S.Button>
                 </S.BtnGroup>
-                <S.CloseButton className="btn-edit__close _btn-bg _hover01">
-                  Закрыть
-                </S.CloseButton>
+                <S.CloseButton onClick={closeUserCard}>Закрыть</S.CloseButton>
               </S.BtnBrowse>
             ) : (
               <S.BtnBrowse>
                 <S.BtnGroup>
                   <S.Button onClick={editCard}>Редактировать задачу</S.Button>
-                  <S.Button>Удалить задачу</S.Button>
+                  <S.Button onClick={deleteButton}>Удалить задачу</S.Button>
                 </S.BtnGroup>
                 <S.CloseButton onClick={closeUserCard}>Закрыть</S.CloseButton>
               </S.BtnBrowse>
@@ -192,6 +176,7 @@ export const UserCard = () => {
           </S.Content>
         </S.Block>
       </S.Container>
+      ;
     </S.Browse>
   );
 };

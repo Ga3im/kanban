@@ -4,6 +4,7 @@ export const Main = styled.main`
   width: 100%;
   background-color: ${(prop) => prop.theme.mainBackground};
   transition: all 0.25s linear;
+  background: ${($bg) => $bg};
 `;
 
 export const Container = styled.div`
@@ -11,6 +12,14 @@ export const Container = styled.div`
   width: 100%;
   margin: 0 auto;
   padding: 0 30px;
+`;
+
+export const Error = styled.p`
+  color: red;
+  font-size: 30px;
+  text-align: center;
+  padding-bottom: 300px;
+  padding-top: 90px;
 `;
 
 export const Block = styled.div`

@@ -15,6 +15,7 @@ export const Cards = styled.div`
   width: 100%;
   display: block;
   position: relative;
+
   &:hover{
   cursor: pointer;}
   @media screen and (max-width: 1200px) {
@@ -26,7 +27,7 @@ export const Cards = styled.div`
 `;
 
 export const CardItem = styled.div`
-  padding: 5px;
+  padding: 10px;
   animation: ${CardAnimation} 500ms linear;
 `;
 
@@ -41,6 +42,7 @@ export const CardsCard = styled.div`
   justify-content: stretch;
   padding: 15px 13px 19px;
   transition: all 0, 25s linear;
+  box-shadow: inset 0px 0px 20px -10px;
 
   @media screen and (max-width: 1200px) {
     width: 220px;

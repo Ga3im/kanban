@@ -29,6 +29,7 @@ export const Block = styled.div`
 
 export const Logo = styled.img`
   width: 115px;
+  cursor: pointer;
 `;
 
 export const Nav = styled.nav`
@@ -55,6 +56,30 @@ export const AddButton = styled.button`
     ${hover01}
   }
 `;
+
+export const AddButtonDisable = styled.button`
+  width: 178px;
+  height: 30px;
+  border-radius: 4px;
+  background-color: rgb(128, 128, 128);
+  color: #ffffff;
+  border: none;
+  font-size: 14px;
+  line-height: 1;
+  font-weight: 500;
+  margin-right: 20px;
+
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
+export const Image = styled.img`
+  width: 30px;
+  margin-right: 7px;
+  border-radius: 100%;
+`;
+
 export const User = styled.p`
   height: 20px;
   display: flex;
@@ -125,7 +150,6 @@ export const PopUserTheme = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 30px;
 
   p {
     color: ${(prop) => prop.theme.text};
@@ -169,5 +193,6 @@ export const PopUserExitBtn = styled.button`
   border-radius: 4px;
   box-shadow: 0px 0px 20px -3px;
   background: ${(prop) => prop.theme.popUserSet};
+  margin-top: 30px;
   ${hover03};
 `;

@@ -2,10 +2,16 @@ import { useState } from "react";
 import * as S from "./Header.styled.js";
 import { useNavigate } from "react-router-dom";
 import { Router } from "../../pages/routes.js";
+import { useUserContext } from "../../context/UserContext.jsx";
 
-export const Header = ({ isAuth, theme, setTheme }) => {
+export const Header = ({ dis, isAuth, theme, setTheme }) => {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
+  const { user } = useUserContext();
+
+  const logo = () => {
+    navigate(Router.main);
+  };
 
   const handleOpen = () => {
     setIsOpen(!isOpen);
@@ -18,7 +24,7 @@ export const Header = ({ isAuth, theme, setTheme }) => {
   };
 
   const handleAddCard = () => {
-    navigate(Router.CreateCard)
+    navigate(Router.CreateCard);
   };
 
   const handleNightTheme = () => {
@@ -34,22 +40,32 @@ export const Header = ({ isAuth, theme, setTheme }) => {
       <S.Container>
         <S.Block>
           {theme === "light" ? (
-            <S.Logo src="/public/logo.png" alt="logo"></S.Logo>
+            <S.Logo onClick={logo} src="/public/logo.png" alt="logo"></S.Logo>
           ) : (
-            <S.Logo src="/public/logo_dark.png" alt="logo"></S.Logo>
+            <S.Logo
+              onClick={logo}
+              src="/public/logo_dark.png"
+              alt="logo"
+            ></S.Logo>
           )}
           {isAuth ? (
             <S.Nav>
-              <S.AddButton onClick={handleAddCard} id="btnMainNew">
-                Создать новую задачу
-              </S.AddButton>
+              {dis ? (
+                <S.AddButtonDisable> Создать новую задачу</S.AddButtonDisable>
+              ) : (
+                <S.AddButton onClick={handleAddCard}>
+                  Создать новую задачу
+                </S.AddButton>
+              )}
+
+              <S.Image src={user.imageUrl} alt="" />
               <S.User $isOpen={isOpen} onClick={handleOpen}>
-                Ivan Ivanov
+                {user.name}
               </S.User>
               {isOpen && (
                 <S.PopUserSet id="user-set-target">
-                  <S.UserName>Ivan Ivanov</S.UserName>
-                  <S.UserMail>ivan.ivanov@gmail.com</S.UserMail>
+                  <S.UserName>{user.name}</S.UserName>
+                  <S.UserMail>{user.login}</S.UserMail>
                   <S.PopUserTheme>
                     <p>Темная тема</p>
                     <input
@@ -65,7 +81,14 @@ export const Header = ({ isAuth, theme, setTheme }) => {
               )}
             </S.Nav>
           ) : (
-            ""
+            <S.PopUserTheme>
+              <p>Темная тема</p>
+              <input
+                type="checkbox"
+                name="checkbox"
+                onClick={handleNightTheme}
+              />
+            </S.PopUserTheme>
           )}
         </S.Block>
       </S.Container>
