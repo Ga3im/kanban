@@ -60,25 +60,16 @@ export const CardsCard = styled.div`
 
 export const Group = styled.div`
   width: 100%;
-  height: 20px;
-  margin-bottom: 12px;
   display: flex;
   align-items: center;
   justify-content: space-between;
 `;
 
-export const CardTheme = styled.div`
-  width: auto;
-  height: 20px;
-  padding: 5px 14px;
-  border-radius: 18px;
-  ${({ $color }) => topicColor($color)};
-  p {
-    font-size: 10px;
-    font-weight: 600;
-    line-height: 10px;
-    color: ;
-  }
+export const Title = styled.h3`
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 18px;
+  margin-bottom: 10px;
 `;
 
 export const CardBtn = styled.div`
@@ -97,20 +88,23 @@ export const CardBtn = styled.div`
   }
 `;
 
-export const Content = styled.div`
-  height: 64px;
+export const CardMain = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
   justify-content: space-between;
+  height: 100%;
 `;
 
-export const Title = styled.h3`
+export const CardDescription = styled.div`
+  width: 100%;
   font-size: 14px;
-  font-weight: 500;
-  line-height: 18px;
-  color: ${(prop) => prop.theme.text};
+  text-align: start;
   margin-bottom: 10px;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 `;
 
 export const Date = styled.div`

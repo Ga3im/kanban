@@ -12,9 +12,8 @@ export const categories = ["Web Design", "Research", "Copywriting"];
 export const CreateCard = ({ setCard, selected, setSelected }) => {
   const [add, setAdd] = useState({
     title: "Новая задача",
-    topic: "Research",
     status: "Без статуса",
-    description: " ",
+    description: "",
     date: new Date(),
   });
   const navigate = useNavigate();
@@ -27,10 +26,6 @@ export const CreateCard = ({ setCard, selected, setSelected }) => {
   const onSelectStatus = (i) => {
     console.log(i);
     setAdd({ ...add, status: i });
-  };
-
-  const catCheck = (i) => {
-    setAdd({ ...add, topic: i });
   };
 
   const addNewCArd = () => {
@@ -98,21 +93,7 @@ export const CreateCard = ({ setCard, selected, setSelected }) => {
               </S.Form>
               <Calendar selected={selected} setSelected={setSelected} />
             </S.Wrap>
-            <S.Categorios>
-              <S.CatTitle>Категория</S.CatTitle>
-              <S.CatThemes>
-                {categories.map((i) => (
-                  <S.CatTheme
-                    $selectCat={add.topic === i}
-                    onClick={() => catCheck(i)}
-                    $cat={i}
-                    key={i}
-                  >
-                    <p>{i}</p>
-                  </S.CatTheme>
-                ))}
-              </S.CatThemes>
-            </S.Categorios>
+     
             <S.Button onClick={addNewCArd}>Создать задачу</S.Button>
           </S.Content>
         </S.Block>

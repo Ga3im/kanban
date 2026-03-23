@@ -1,3 +1,4 @@
+import { useSelector } from "react-redux";
 import { Column } from "../Column/Column";
 import * as S from "./Main.styled.js";
 import { Outlet } from "react-router-dom";
@@ -6,11 +7,12 @@ export const statusList = [
   "Без статуса",
   "Нужно сделать",
   "В работе",
-  "Тестирование",
   "Готово",
 ];
 
-export const Main = ({ err, setErr, card }) => {
+export const Main = ({ err, setErr }) => {
+  const { cards } = useSelector((state) => state.cards);
+
   return (
     <S.Main>
       <Outlet />
@@ -27,7 +29,7 @@ export const Main = ({ err, setErr, card }) => {
                   setErr={setErr}
                   key={status}
                   title={status}
-                  card={card.filter((i) => i.status === status)}
+                  card={cards.filter((i) => i.status === status)}
                 />
               ))}
             </S.Content>

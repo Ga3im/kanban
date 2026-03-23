@@ -12,11 +12,11 @@ export const Container = styled.div`
   max-width: 1260px;
   width: 100%;
   margin: 0 auto;
-  padding: 0 30px;
+  padding: 0 10px;
 `;
 
 export const Block = styled.div`
-  height: 70px;
+  height: 50px;
   display: flex;
   flex-wrap: nowrap;
   align-items: center;
@@ -55,23 +55,50 @@ export const AddButton = styled.button`
   &:hover {
     ${hover01}
   }
+
+  @media (max-width: 600px) {
+    display: none;
+  }
 `;
 
-export const AddButtonDisable = styled.button`
-  width: 178px;
+export const AddButtonMobile = styled.button`
+  width: 30px;
   height: 30px;
-  border-radius: 4px;
-  background-color: rgb(128, 128, 128);
-  color: #ffffff;
+  border-radius: 100%;
+  background-color: #565eef;
   border: none;
-  font-size: 14px;
-  line-height: 1;
-  font-weight: 500;
-  margin-right: 20px;
+  position: relative;
 
   &:hover {
-    cursor: pointer;
+    ${hover01}
   }
+  @media (max-width: 600px) {
+    display: block;
+  }
+  @media (min-width: 600px) {
+    display: none;
+  }
+`;
+export const AddButtonMobileHor = styled.div`
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+
+  width: 16px;
+  height: 3px;
+  background-color: #fff;
+`;
+
+export const AddButtonMobileVer = styled.div`
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+
+  width: 3px;
+  height: 16px;
+  background-color: #fff;
 `;
 
 export const Image = styled.img`
@@ -82,6 +109,7 @@ export const Image = styled.img`
 
 export const User = styled.p`
   height: 20px;
+  margin-left: 5px;
   display: flex;
   flex-wrap: nowrap;
   align-items: center;

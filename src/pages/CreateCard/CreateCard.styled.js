@@ -1,21 +1,11 @@
 import styled, { css } from "styled-components";
 import {
-  Gray,
-  Green,
   hover01,
-  Orange,
-  Purple,
   SubTtl,
 } from "../../Global.styled";
 
 const activeCat = css`
   opacity: 1 !important;
-`;
-
-const catColor = ($cat) => css`
-  ${$cat === "Web Design" ? Orange : Gray}
-  ${$cat === "Research" ? Green : ""}
-${$cat === "Copywriting" ? Purple : ""}
 `;
 
 export const Card = styled.div`
@@ -198,43 +188,6 @@ export const TextArea = styled.textarea`
     line-height: 1px;
     color: #94a6be;
     letter-spacing: -0.14px;
-  }
-`;
-
-export const Categorios = styled.div`
-  margin-bottom: 20px;
-`;
-
-export const CatTitle = styled.p`
-  margin-bottom: 14px;
-  ${SubTtl}
-`;
-
-export const CatThemes = styled.div`
-  display: flex;
-  flex-wrap: nowrap;
-  align-items: flex-start;
-  justify-content: flex-start;
-`;
-
-export const CatTheme = styled.div`
-  display: inline-block;
-  width: auto;
-  height: 30px;
-  padding: 8px 20px;
-  border-radius: 24px;
-  margin-right: 7px;
-  opacity: ${({ $selectCat }) => ($selectCat ? "1" : "0.4")};
-  cursor: pointer;
-
-  ${({ $cat }) => catColor($cat)}
-  //activeCat
-
-  p {
-    font-size: 14px;
-    font-weight: 600;
-    line-height: 14px;
-    white-space: nowrap;
   }
 `;
 
