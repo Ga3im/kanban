@@ -14,7 +14,6 @@ import { CreateCard } from "./pages/CreateCard/CreateCard.jsx";
 import { UserCard } from "./pages/UserCard/UserCard.jsx";
 import { UserContext } from "./context/UserContext.jsx";
 import { LoadingMainPage } from "./components/LoadingMainPage/LoadingMainPage.jsx";
-import { cardList } from "./data.js";
 import { Provider } from "react-redux";
 import store from "./store/index.js";
 

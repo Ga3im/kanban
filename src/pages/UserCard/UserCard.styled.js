@@ -15,7 +15,7 @@ export const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  padding-top: 40px;
+  height: 100%;
 `;
 
 export const Block = styled.div`
@@ -33,7 +33,7 @@ export const Block = styled.div`
     min-width: 500px;
   }
   @media (max-width: 650px) {
-    padding: 20px 15px 40px;
+    padding: 20px 15px 60px;
   }
 `;
 
@@ -161,7 +161,7 @@ export const TextArea = styled.textarea`
   resize: none;
 
   @media (max-width: 425px) {
-   margin-top: 0px;
+   margin-top: 5px;
     padding: 7px;
   }
 
@@ -180,8 +180,6 @@ export const TextArea = styled.textarea`
   letter-spacing: -0.14px;
 }
 }
-
-
 `;
 
 export const Date = styled.p`
@@ -211,6 +209,7 @@ export const BtnGroup = styled.div`
   display: flex;
 
   @media (max-width: 768px) {
+    margin-top: 10px;
     margin-bottom: 10px;
   }
 `;

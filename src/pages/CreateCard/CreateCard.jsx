@@ -1,100 +1,91 @@
-import { useNavigate } from "react-router-dom";
-import * as S from "./CreateCard.styled.js";
-import { Router } from "../routes.js";
 import { useEffect, useState } from "react";
-import { addTask } from "../../api.js";
-import { useUserContext } from "../../context/UserContext.jsx";
-import { Calendar } from "../../components/Calendar/Calendar.jsx";
-import { statusList } from "../../components/Main/Main.jsx";
+import { useNavigate } from "react-router-dom";
+import { useUserContext } from "../../context/UserContext";
+import * as S from "./CreateCard.styled";
+import { statusList } from "../../components/Main/Main";
+import { Calendar } from "../../components/Calendar/Calendar";
+import { useDispatch } from "react-redux";
+import { addCard } from "../../store/cardsSlice";
+import { Router } from "../routes";
 
-export const categories = ["Web Design", "Research", "Copywriting"];
-
-export const CreateCard = ({ setCard, selected, setSelected }) => {
+export const CreateCard = ({ selected, setSelected }) => {
   const [add, setAdd] = useState({
-    title: "Новая задача",
+    _id: crypto.randomUUID(),
+    title: "",
     status: "Без статуса",
     description: "",
     date: new Date(),
   });
   const navigate = useNavigate();
-  const { user } = useUserContext();
-
-  const closeCreatPage = () => {
-    navigate(Router.main);
-  };
-
-  const onSelectStatus = (i) => {
-    console.log(i);
-    setAdd({ ...add, status: i });
-  };
-
-  const addNewCArd = () => {
-    addTask(user.token, add)
-      .then((res) => {
-        setCard(res.tasks);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-    navigate(Router.main);
-  };
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    setAdd({ ...add, date: selected });
+    setAdd((prev) => ({ ...prev, date: selected }));
   }, [selected]);
+
+  const closeCreatPage = () => navigate(Router.main);
+
+  const onSelectStatus = (i) => setAdd({ ...add, status: i });
+
+  const addNewCard = () => {
+    dispatch(addCard(add));
+    navigate(Router.main);
+  };
 
   return (
     <S.Card>
       <S.Container>
         <S.Block>
           <S.Content>
-            <S.Title>Создание задачи</S.Title>
-            <S.Close onClick={closeCreatPage}>&#10006;</S.Close>
+            <S.TopBlock>
+              <S.Title>Создание задачи</S.Title>
+              <S.Close onClick={closeCreatPage}>✖</S.Close>
+            </S.TopBlock>
+
             <S.Status>
               <S.StatusP>Статус</S.StatusP>
               <S.StatusThemes>
-                {statusList.map((i) => {
-                  return (
-                    <S.StatusTheme
-                      key={i}
-                      $selectStatus={i === add.status}
-                      onClick={() => onSelectStatus(i)}
-                    >
-                      <p>{i}</p>
-                    </S.StatusTheme>
-                  );
-                })}
+                {statusList.map((i) => (
+                  <S.StatusTheme
+                    key={i}
+                    $selectStatus={i === add.status}
+                    onClick={() => onSelectStatus(i)}
+                  >
+                    <p>{i}</p>
+                  </S.StatusTheme>
+                ))}
               </S.StatusThemes>
             </S.Status>
+
             <S.Wrap>
-              <S.Form action="#">
+              <S.Form>
                 <S.FormBlock>
                   <S.Label>Название задачи</S.Label>
                   <S.Input
                     onChange={(e) => setAdd({ ...add, title: e.target.value })}
-                    type="text"
-                    name="name"
                     placeholder="Введите название задачи..."
                     autoFocus
                   />
                 </S.FormBlock>
                 <S.FormBlock>
-                  <S.Label htmlFor="textArea" className="subttl">
-                    Описание задачи
-                  </S.Label>
+                  <S.Label>Описание задачи</S.Label>
                   <S.TextArea
+                    rows={5}
                     onChange={(e) =>
                       setAdd({ ...add, description: e.target.value })
                     }
-                    name="text"
                     placeholder="Введите описание задачи..."
-                  ></S.TextArea>
+                  />
                 </S.FormBlock>
               </S.Form>
-              <Calendar selected={selected} setSelected={setSelected} />
+              <S.CalendarWrapper>
+                <Calendar selected={selected} setSelected={setSelected} />
+              </S.CalendarWrapper>
             </S.Wrap>
-     
-            <S.Button onClick={addNewCArd}>Создать задачу</S.Button>
+
+            <S.BtnGroup>
+              <S.Button onClick={addNewCard}>Создать задачу</S.Button>
+            </S.BtnGroup>
           </S.Content>
         </S.Block>
       </S.Container>

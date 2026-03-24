@@ -6,7 +6,10 @@ export const StyledDayPicker = styled(DayPicker)`
   --rdp-cell-size: 20px;
   --rdp-day_button-height: 35px;
   --rdp-day_button-width: 35px;
-  margin: 0px;
+    margin: 0px;
+    font-size:16px;
+  
+
 
   .rdp-day_today:not(.rdp-day_outside) {
     font-weight: bold;
@@ -34,6 +37,7 @@ export const StyledDayPicker = styled(DayPicker)`
     background-color: #94a6be;
   }
   }
+
 `;
 export const Date = styled.p`
   font-weight: 600;
@@ -50,6 +54,7 @@ export const CalPos = styled.div`
 
   @media (max-width: 650px) {
     gap: 0px;
+    margin-bottom: 0px;
   }
 `;
 
@@ -64,8 +69,5 @@ export const P = styled.div`
   }
   p {
     color: red;
-  }
-
-  @media (max-width: 500px) {
   }
 `;

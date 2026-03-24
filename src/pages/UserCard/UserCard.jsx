@@ -1,42 +1,52 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import * as S from "./UserCard.styled.js";
 import { Router } from "../routes.js";
-import { useState } from "react";
-import { useUserContext } from "../../context/UserContext.jsx";
+import { useEffect, useState } from "react";
 import { Calendar } from "../../components/Calendar/Calendar.jsx";
 import { statusList } from "../../components/Main/Main.jsx";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { format } from "date-fns";
+import { deleteCard, editCard } from "../../store/cardsSlice.js";
 
 export const UserCard = ({ setSelected, selected }) => {
   const [isEdit, setIsEdit] = useState(false);
-  const [edit, setEdit] = useState({});
   const { selectedCard } = useSelector((state) => state.cards);
-  console.log(selectedCard);
-  const { user } = useUserContext(null);
+  const [edit, setEdit] = useState(selectedCard);
+
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    setEdit({ ...edit, date: selected });
+  }, [selected]);
+
   const closeUserCard = () => {
     navigate(Router.main);
   };
 
-  const editCard = (e) => {
-    e.preventDefault();
+  const handleEditCard = (e) => {
     setIsEdit(true);
   };
 
   const saveEditButton = () => {
+    dispatch(editCard(edit));
     setIsEdit(false);
   };
 
   const cancelEdit = (e) => {
-    e.preventDefault();
     setIsEdit(false);
   };
 
-  const onSelectStatus = (i) => {
-    setIsEdit({ ...edit, status: i });
+  const onSelectStatus = (newStatus) => {
+    setEdit({ ...edit, status: newStatus });
   };
 
-  const deleteButton = () => {};
+  const deleteButton = () => {
+    dispatch(deleteCard(selectedCard));
+    navigate(Router.main);
+  };
+
+  console.log(edit);
 
   return (
     <S.Browse>
@@ -55,7 +65,9 @@ export const UserCard = ({ setSelected, selected }) => {
                       return (
                         <S.StatusTheme
                           key={i}
-                          $selectStatus={selectedCard.status === i}
+                          $selectStatus={
+                            (edit.status || selectedCard.status) === i
+                          }
                           onClick={() => onSelectStatus(i)}
                         >
                           <p>{i}</p>
@@ -83,7 +95,10 @@ export const UserCard = ({ setSelected, selected }) => {
                   readOnly={isEdit ? false : true}
                 ></S.TextArea>
 
-                <S.Date>Срок выполнения: {selectedCard.date}</S.Date>
+                <S.Date>
+                  Срок выполнения:{" "}
+                  {format(new Date(selectedCard.date), "dd.MM.yyyy")}
+                </S.Date>
               </S.Form>
               {isEdit && (
                 <Calendar selected={selected} setSelected={setSelected} />
@@ -102,7 +117,7 @@ export const UserCard = ({ setSelected, selected }) => {
                   </>
                 ) : (
                   <>
-                    <S.Button onClick={editCard}>Редактировать</S.Button>
+                    <S.Button onClick={handleEditCard}>Редактировать</S.Button>
                     <S.Button onClick={deleteButton}>Удалить</S.Button>
                   </>
                 )}

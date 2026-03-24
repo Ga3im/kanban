@@ -146,8 +146,6 @@ export const PopUserSet = styled.div`
   position: absolute;
   top: 61px;
   right: 0;
-  width: 213px;
-  height: 205px;
   border-radius: 10px;
   border: 0.7px solid rgba(148, 166, 190, 0.4);
   background: ${(prop) => prop.theme.popUserSet};
@@ -178,7 +176,8 @@ export const PopUserTheme = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-
+  gap: 20px;
+  text-align: center;
   p {
     color: ${(prop) => prop.theme.text};
     font-size: 14px;

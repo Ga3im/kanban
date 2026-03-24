@@ -1,34 +1,30 @@
 import { useNavigate } from "react-router-dom";
 import * as S from "./Card.styled.js";
-import { useState } from "react";
-import { setSelectedCard } from "../../store/cardsSlice.js";
+import { setDraggedColumn, setSelectedCard } from "../../store/cardsSlice.js";
 import { useDispatch } from "react-redux";
+import { useState } from "react";
+import { format } from "date-fns";
 
 export const Card = ({ card }) => {
+  const [isDragging, setIsDragging] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [currentCard, setCurrentCard] = useState(null);
-  const dragStart = () => {
-    setCurrentCard(card);
+
+  const dragStart = (e) => {
+    e.dataTransfer.setData("cardId", card._id);
+    dispatch(setDraggedColumn(card.status));
+    setTimeout(() => setIsDragging(true), 0);
   };
 
-  const dragEnd = (e) => {
-    e.preventDefault();
-    console.log("dragEnd");
-  };
-
-  const dragOver = () => {
-    console.log("Over");
-  };
-
-  const dragLeave = () => {
-    console.log("dragLeave");
+  const dragEnd = () => {
+    setIsDragging(false);
+    dispatch(setDraggedColumn(null));
   };
 
   const openUserCard = (e) => {
     e.preventDefault();
     dispatch(setSelectedCard(card));
-    navigate(`/card/${card.id}`);
+    navigate(`/card/${card._id}`);
   };
 
   return (
@@ -37,10 +33,12 @@ export const Card = ({ card }) => {
         <S.CardsCard
           onClick={openUserCard}
           draggable
-          onDragStart={dragStart}
           onDragEnd={dragEnd}
-          onDragOver={dragOver}
-          onDragLeave={dragLeave}
+          onDragStart={dragStart}
+          style={{
+            opacity: isDragging ? 0.5 : 1,
+            border: isDragging ? "2px dashed #94A6BE" : "none",
+          }}
         >
           <S.Group>
             <S.Title>{card.title}</S.Title>
@@ -76,12 +74,12 @@ export const Card = ({ card }) => {
                   />
                 </g>
                 <defs>
-                  <clipPath id="clip0_1_415">
+                  <clipPath _id="clip0_1_415">
                     <rect width="13" height="13" fill="white" />
                   </clipPath>
                 </defs>
               </svg>
-              <p>{card.date}</p>
+              <p> {format(new Date(card.date), "dd.MM.yyyy")}</p>
             </S.Date>
           </S.CardMain>
         </S.CardsCard>
