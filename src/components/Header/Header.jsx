@@ -2,30 +2,24 @@ import { useRef, useState } from "react";
 import * as S from "./Header.styled.js";
 import { useNavigate } from "react-router-dom";
 import { Router } from "../../pages/routes.js";
-import { useUserContext } from "../../context/UserContext.jsx";
 import { useOutsideClick } from "../../hooks/useCloseModal.js";
 
 export const Header = ({ isAuth, theme, setTheme }) => {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
-  const { user } = useUserContext();
   const popUserRef = useRef();
   const popUserBtnRef = useRef();
 
-  const userInfo = user
-    ? {
-        name: user.name,
-        login: user.login,
-        img: user.imageUrl,
-      }
-    : null;
-
-  const handleOpen = () => {
-    setIsOpen(!isOpen);
+  const handleLogoClick = () => {
+    navigate(Router.main);
   };
 
   const handleAddCard = () => {
     navigate(Router.CreateCard);
+  };
+
+  const handleOpen = () => {
+    setIsOpen(!isOpen);
   };
 
   const handleNightTheme = () => {
@@ -34,6 +28,11 @@ export const Header = ({ isAuth, theme, setTheme }) => {
     } else {
       setTheme("light");
     }
+  };
+
+  const handleArchiveClick = () => {
+    navigate(Router.archive);
+    setIsOpen(false);
   };
 
   const closePopUser = () => {
@@ -47,6 +46,7 @@ export const Header = ({ isAuth, theme, setTheme }) => {
       <S.Container>
         <S.Block>
           <svg
+            onClick={handleLogoClick}
             width="50"
             height="50"
             viewBox="0 0 100 100"
@@ -86,66 +86,56 @@ export const Header = ({ isAuth, theme, setTheme }) => {
             <S.AddButtonMobileVer />
             <S.AddButtonMobileHor />
           </S.AddButtonMobile>
-          {isAuth ? (
-            <S.Nav>
-              <S.AddButton onClick={handleAddCard}>
-                Создать новую задачу
-              </S.AddButton>
 
+          <S.Nav>
+            <S.AddButton onClick={handleAddCard}>
+              Создать новую задачу
+            </S.AddButton>
+
+            <S.MenuIcon ref={popUserBtnRef} onClick={handleOpen}>
               <svg
-                width="20"
-                height="20"
+                width="24"
+                height="24"
                 viewBox="0 0 24 24"
                 fill="none"
                 xmlns="http://www.w3.org"
               >
-                <circle
-                  cx="12"
-                  cy="12"
-                  r="11"
+                <path
+                  d="M3 12H21"
                   stroke="currentColor"
-                  stroke-width="2"
+                  strokeWidth="2"
+                  strokeLinecap="round"
                 />
                 <path
-                  d="M12 12C14.2091 12 16 10.2091 16 8C16 5.79086 14.2091 4 12 4C9.79086 4 8 5.79086 8 8C8 10.2091 9.79086 12 12 12Z"
-                  fill="currentColor"
+                  d="M3 6H21"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
                 />
                 <path
-                  d="M6 19C6 16.2386 8.23858 14 11 14H13C15.7614 14 18 16.2386 18 19V20H6V19Z"
-                  fill="currentColor"
+                  d="M3 18H21"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
                 />
               </svg>
-              <S.User $isOpen={isOpen} onClick={handleOpen}>
-                {/* {userInfo.name} */}
-              </S.User>
-              {isOpen && (
-                <S.PopUserSet ref={popUserRef} id="user-set-target">
-                  {/* <S.UserName>{userInfo.name}</S.UserName> */}
-                  {/* <S.UserMail>{userInfo.login}</S.UserMail> */}
-                  <S.PopUserTheme ref={popUserBtnRef}>
-                    <p>Темная тема</p>
-                    <input
-                      type="checkbox"
-                      name="checkbox"
-                      onClick={handleNightTheme}
-                    />
-                  </S.PopUserTheme>
-                  {/* <S.PopUserExitBtn type="button" onClick={Exit}>
-                    Выйти
-                  </S.PopUserExitBtn> */}
-                </S.PopUserSet>
-              )}
-            </S.Nav>
-          ) : (
-            <S.PopUserTheme>
-              <p>Темная тема</p>
-              <input
-                type="checkbox"
-                name="checkbox"
-                onClick={handleNightTheme}
-              />
-            </S.PopUserTheme>
-          )}
+            </S.MenuIcon>
+
+            {isOpen && (
+              <S.PopUserSet ref={popUserRef} id="user-set-target">
+                <S.Archive onClick={handleArchiveClick}>Архив задач</S.Archive>
+
+                <S.PopUserTheme>
+                  <p>Темная тема</p>
+                  <input
+                    type="checkbox"
+                    name="checkbox"
+                    onClick={handleNightTheme}
+                  />
+                </S.PopUserTheme>
+              </S.PopUserSet>
+            )}
+          </S.Nav>
         </S.Block>
       </S.Container>
     </S.Header>

@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useUserContext } from "../../context/UserContext";
 import * as S from "./CreateCard.styled";
 import { statusList } from "../../components/Main/Main";
 import { Calendar } from "../../components/Calendar/Calendar";

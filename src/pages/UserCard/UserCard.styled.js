@@ -185,9 +185,10 @@ export const TextArea = styled.textarea`
 export const Date = styled.p`
   padding-top: 10px;
   font-size: 14px;
+  color: ${({ $isOverdue }) => ($isOverdue ? "#F84D4D" : "#94A6BE")};
 
   @media (max-width: 425px) {
-    padding-top: 0px;
+    padding-top: 5px;
   }
 `;
 
@@ -202,16 +203,13 @@ export const BtnBrowse = styled.div`
 
   @media (max-width: 768px) {
     justify-content: center;
+    gap: 10px;
   }
 `;
 
 export const BtnGroup = styled.div`
   display: flex;
 
-  @media (max-width: 768px) {
-    margin-top: 10px;
-    margin-bottom: 10px;
-  }
 `;
 
 export const Button = styled.button`

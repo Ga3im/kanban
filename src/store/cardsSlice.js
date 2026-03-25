@@ -6,10 +6,16 @@ const getInitCards = () => {
   return savedCards ? JSON.parse(savedCards) : cardList;
 };
 
+const getInitCard = () => {
+  const savedCard = localStorage.getItem("card");
+  return savedCard ? JSON.parse(savedCard) : null;
+};
+
 const initialState = {
   cards: getInitCards(),
-  selectedCard: null,
+  selectedCard: getInitCard(),
   draggedColumn: null,
+  isDeleteModalOpen: false,
 };
 
 const cardsSlice = createSlice({
@@ -21,6 +27,7 @@ const cardsSlice = createSlice({
     },
     setSelectedCard: (state, action) => {
       state.selectedCard = action.payload;
+      localStorage.setItem("card", JSON.stringify(state.selectedCard));
     },
     updateCardStatus: (state, action) => {
       const { _id, newStatus } = action.payload;
@@ -29,6 +36,11 @@ const cardsSlice = createSlice({
       );
 
       if (card) {
+        if (newStatus === "Готово") {
+          card.completedDate = new Date();
+        } else {
+          card.completedDate = null;
+        }
         card.status = newStatus;
         localStorage.setItem("cards", JSON.stringify(state.cards));
       }
@@ -38,11 +50,6 @@ const cardsSlice = createSlice({
     },
     addCard: (state, action) => {
       state.cards.push(action.payload);
-      localStorage.setItem("cards", JSON.stringify(state.cards));
-    },
-    deleteCard: (state, action) => {
-      const { _id } = action.payload;
-      state.cards = state.cards.filter((c) => c._id !== _id);
       localStorage.setItem("cards", JSON.stringify(state.cards));
     },
     editCard: (state, action) => {
@@ -60,6 +67,35 @@ const cardsSlice = createSlice({
         localStorage.setItem("cards", JSON.stringify(state.cards));
       }
     },
+    openDeleteModal: (state) => {
+      state.isDeleteModalOpen = true;
+    },
+    closeDeleteModal: (state) => {
+      const card = state.cards.find((c) => c._id === state.selectedCard._id);
+      if (card) {
+        card.archivedDate = new Date().toISOString();
+      }
+      localStorage.setItem("cards", JSON.stringify(state.cards));
+      state.isDeleteModalOpen = false;
+    },
+    closeModal: (state) => {
+      state.isDeleteModalOpen = false;
+    },
+    addToArchive: (state) => {
+      const card = state.cards.find((c) => c._id === state.selectedCard._id);
+      console.log(card);
+      if (card) {
+        card.archivedDate = new Date().toISOString();
+      }
+      localStorage.setItem("cards", JSON.stringify(state.cards));
+    },
+    returnCard: (state) => {
+      const card = state.cards.find((c) => c._id === state.selectedCard._id);
+      if (card) {
+        card.archivedDate = null;
+      }
+      localStorage.setItem("cards", JSON.stringify(state.cards));
+    },
   },
 });
 
@@ -69,7 +105,11 @@ export const {
   updateCardStatus,
   setDraggedColumn,
   addCard,
-  deleteCard,
   editCard,
+  openDeleteModal,
+  closeDeleteModal,
+  closeModal,
+  addToArchive,
+  returnCard,
 } = cardsSlice.actions;
 export default cardsSlice.reducer;

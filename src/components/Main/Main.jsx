@@ -29,13 +29,16 @@ export const Main = ({ err, setErr }) => {
                   setErr={setErr}
                   key={status}
                   title={status}
-                  card={cards.filter((i) => i.status === status)}
+                  card={cards.filter(
+                    (i) => i.status === status && !i.archivedDate
+                  )}
                 />
               ))}
             </S.Content>
           </S.Block>
         )}
       </S.Container>
+      <Outlet />
     </S.Main>
   );
 };

@@ -5,6 +5,8 @@ export const cardList = [
     title: "сайт Погода",
     description: "Деплой сайта",
     status: "Готово",
+    completedDate: "2026-03-12T12:00:00.000Z",
+    archivedDate: null,
   },
   {
     _id: 2,
@@ -12,6 +14,8 @@ export const cardList = [
     title: "сайт Задач",
     description: "Добавить карточки с микрозадачами",
     status: "Без статуса",
+    completedDate: null,
+    archivedDate: null,
   },
   {
     _id: 3,
@@ -19,6 +23,8 @@ export const cardList = [
     title: "Канбан доски",
     description: "Адаптировать под все устройства",
     status: "Нужно сделать",
+    completedDate: null,
+    archivedDate: null,
   },
   {
     _id: 4,
@@ -26,6 +32,8 @@ export const cardList = [
     title: "Фитнес сайт",
     description: "Добавить таймер",
     status: "Без статуса",
+    completedDate: null,
+    archivedDate: null,
   },
   {
     _id: 5,
@@ -33,6 +41,8 @@ export const cardList = [
     title: "Учеба",
     description: "Сделать ДЗ-2",
     status: "В работе",
+    completedDate: null,
+    archivedDate: "2026-03-22T12:00:00.000Z",
   },
   {
     _id: 6,
@@ -41,5 +51,7 @@ export const cardList = [
     description:
       "Тренировка на свежем воздухе, подятигвание, отжимание, приседание, пресс",
     status: "Без статуса",
+    completedDate: null,
+    archivedDate: null,
   },
 ];

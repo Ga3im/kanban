@@ -24,7 +24,7 @@ export const Card = ({ card }) => {
   const openUserCard = (e) => {
     e.preventDefault();
     dispatch(setSelectedCard(card));
-    navigate(`/card/${card._id}`);
+    navigate(`card/${card._id}`);
   };
 
   return (
@@ -87,4 +87,3 @@ export const Card = ({ card }) => {
     </S.Cards>
   );
 };
-// format(card.date, "dd.MM.yyyy")

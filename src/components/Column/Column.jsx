@@ -8,7 +8,6 @@ export const Column = ({ title, card }) => {
   const [isOver, setIsOver] = useState(false);
   const dispatch = useDispatch();
   const { draggedColumn } = useSelector((state) => state.cards);
-
   const showPlaceholder = draggedColumn !== null && draggedColumn !== title;
 
   const onDragOver = (e) => {
