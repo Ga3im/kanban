@@ -83,7 +83,6 @@ const cardsSlice = createSlice({
     },
     addToArchive: (state) => {
       const card = state.cards.find((c) => c._id === state.selectedCard._id);
-      console.log(card);
       if (card) {
         card.archivedDate = new Date().toISOString();
       }

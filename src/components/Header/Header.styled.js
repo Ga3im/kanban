@@ -3,7 +3,6 @@ import { hover01, hover02, hover03 } from "../../Global.styled";
 
 export const Header = styled.header`
   width: 100%;
-  margin: 5px auto;
   background-color: ${(prop) => prop.theme.header};
   transition: all 0.25s linear;
 `;

@@ -47,8 +47,8 @@ export const Header = ({ isAuth, theme, setTheme }) => {
         <S.Block>
           <svg
             onClick={handleLogoClick}
-            width="50"
-            height="50"
+            width="40"
+            height="40"
             viewBox="0 0 100 100"
             fill="none"
             xmlns="http://www.w3.org"
