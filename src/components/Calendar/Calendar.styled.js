@@ -3,8 +3,13 @@ import styled from "styled-components";
 
 export const StyledDayPicker = styled(DayPicker)`
   color: #94a6be;
-  --rdp-cell-size: 30px;
-  margin: 0px;
+  --rdp-cell-size: 20px;
+  --rdp-day_button-height: 35px;
+  --rdp-day_button-width: 35px;
+    margin: 0px;
+    font-size:16px;
+  
+
 
   .rdp-day_today:not(.rdp-day_outside) {
     font-weight: bold;
@@ -31,6 +36,8 @@ export const StyledDayPicker = styled(DayPicker)`
   .rdp-day_selected:hover {
     background-color: #94a6be;
   }
+  }
+
 `;
 export const Date = styled.p`
   font-weight: 600;
@@ -44,22 +51,23 @@ export const CalPos = styled.div`
   gap: 14px;
   flex-direction: column;
   margin-bottom: 20px;
-  margin-left: 20px;
+
+  @media (max-width: 650px) {
+    gap: 0px;
+    margin-bottom: 0px;
+  }
 `;
 
 export const P = styled.div`
+  display: flex;
+  gap: 5px;
   font-size: 15px;
   line-height: 11.72px;
-
   color: #94a6be;
   div {
     color: #000;
-    font-size: 16px;
-    padding-top: 5px;
   }
   p {
     color: red;
-    font-size: 16px;
-    padding-top: 5px;
   }
 `;

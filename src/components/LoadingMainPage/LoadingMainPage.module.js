@@ -33,6 +33,7 @@ export const MainContent = styled.div`
   width: 100%;
   display: flex;
   gap: 12px;
+  
 `;
 
 export const MainColumn = styled.div`

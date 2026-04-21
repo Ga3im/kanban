@@ -1,44 +1,57 @@
 export const cardList = [
-    {
-        id:1,
-        date: '15.05.25',
-        topic: 'Web Design',
-        title: 'Название задачи',
-        status: 'Готово'
-    },
-    {
-        id:2,
-        date: '5.03.25',
-        topic: 'Research',
-        title: 'Название задачи',
-        status: 'Без статуса'
-    },
-    {
-        id:3,
-        date: '25.04.25',
-        topic: 'Research',
-        title: 'Название задачи',
-        status: 'Нужно сделать'
-    },
-    {
-        id:4,
-        date: '15.08.25',
-        topic: 'Web Design',
-        title: 'Название задачи',
-        status: 'Без статуса'
-    },
-    {
-        id:5,
-        date: '15.07.25',
-        topic: 'Copywriting',
-        title: 'Название задачи',
-        status: 'В работе'
-    },
-    {
-        id:6,
-        date: '15.06.25',
-        topic: 'Web Design',
-        title: 'Название задачи',
-        status: 'Без статуса'
-    }
-]
+  {
+    _id: 1,
+    date: "2026-03-24T12:00:00.000Z",
+    title: "сайт Погода",
+    description: "Деплой сайта",
+    status: "Готово",
+    completedDate: "2026-03-12T12:00:00.000Z",
+    archivedDate: null,
+  },
+  {
+    _id: 2,
+    date: "2026-03-24T12:00:00.000Z",
+    title: "сайт Задач",
+    description: "Добавить карточки с микрозадачами",
+    status: "Без статуса",
+    completedDate: null,
+    archivedDate: null,
+  },
+  {
+    _id: 3,
+    date: "2026-03-24T12:00:00.000Z",
+    title: "Канбан доски",
+    description: "Адаптировать под все устройства",
+    status: "Нужно сделать",
+    completedDate: null,
+    archivedDate: null,
+  },
+  {
+    _id: 4,
+    date: "2026-03-24T12:00:00.000Z",
+    title: "Фитнес сайт",
+    description: "Добавить таймер",
+    status: "Без статуса",
+    completedDate: null,
+    archivedDate: null,
+  },
+  {
+    _id: 5,
+    date: "2026-03-24T12:00:00.000Z",
+    title: "Учеба",
+    description: "Сделать ДЗ-2",
+    status: "В работе",
+    completedDate: null,
+    archivedDate: "2026-03-22T12:00:00.000Z",
+  },
+  {
+    _id: 6,
+    date: "2026-03-24T12:00:00.000Z",
+    title: "Здоровье",
+    description:
+      "Тренировка на свежем воздухе, подятигвание, отжимание, приседание, пресс",
+    status: "Без статуса",
+    completedDate: null,
+    archivedDate: null,
+  },
+];

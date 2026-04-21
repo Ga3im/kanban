@@ -14,7 +14,7 @@ export function Calendar({ selected, setSelected }) {
           onSelect={setSelected}
         />
         <S.P>
-          Выберите срок исполнения:
+          Срок исполнения:
           <div>
             {new Date(selected) >= new Date() - new Date(24 * 3600 * 1000) ? (
               format(selected, "dd.MM.yyyy")

@@ -3,7 +3,6 @@ import { hover01, hover02, hover03 } from "../../Global.styled";
 
 export const Header = styled.header`
   width: 100%;
-  margin: 0 auto;
   background-color: ${(prop) => prop.theme.header};
   transition: all 0.25s linear;
 `;
@@ -12,11 +11,11 @@ export const Container = styled.div`
   max-width: 1260px;
   width: 100%;
   margin: 0 auto;
-  padding: 0 30px;
+  padding: 0 10px;
 `;
 
 export const Block = styled.div`
-  height: 70px;
+  height: 50px;
   display: flex;
   flex-wrap: nowrap;
   align-items: center;
@@ -55,23 +54,50 @@ export const AddButton = styled.button`
   &:hover {
     ${hover01}
   }
+
+  @media (max-width: 600px) {
+    display: none;
+  }
 `;
 
-export const AddButtonDisable = styled.button`
-  width: 178px;
+export const AddButtonMobile = styled.button`
+  width: 30px;
   height: 30px;
-  border-radius: 4px;
-  background-color: rgb(128, 128, 128);
-  color: #ffffff;
+  border-radius: 100%;
+  background-color: #565eef;
   border: none;
-  font-size: 14px;
-  line-height: 1;
-  font-weight: 500;
-  margin-right: 20px;
+  position: relative;
 
   &:hover {
-    cursor: pointer;
+    ${hover01}
   }
+  @media (max-width: 600px) {
+    display: block;
+  }
+  @media (min-width: 600px) {
+    display: none;
+  }
+`;
+export const AddButtonMobileHor = styled.div`
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+
+  width: 16px;
+  height: 3px;
+  background-color: #fff;
+`;
+
+export const AddButtonMobileVer = styled.div`
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+
+  width: 3px;
+  height: 16px;
+  background-color: #fff;
 `;
 
 export const Image = styled.img`
@@ -80,77 +106,40 @@ export const Image = styled.img`
   border-radius: 100%;
 `;
 
-export const User = styled.p`
-  height: 20px;
+export const MenuIcon = styled.div`
+  cursor: pointer;
   display: flex;
-  flex-wrap: nowrap;
   align-items: center;
   justify-content: center;
-  font-size: 14px;
-  line-height: 20px;
-  color: ${(prop) => prop.theme.userName};
+  color: ${(props) => props.theme.text || "#94A3B8"};
+  transition: color 0.2s ease;
 
   &:hover {
-    ${hover02}
-  }
-
-  &:hover::after {
-    border-left-color: ${(prop) => prop.theme.hoverColor};
-    border-bottom-color: ${(prop) => prop.theme.hoverColor};
-  }
-
-  &::after {
-    content: "";
-    display: block;
-    width: 6px;
-    height: 6px;
-    border-radius: 1px;
-    border-left: 1.9px solid ${(prop) => prop.theme.userName};
-    border-bottom: 1.9px solid ${(prop) => prop.theme.userName};
-    transform: ${(prop) =>
-      prop.$isOpen ? "rotate(135deg)" : "rotate(-45deg)"};
-    margin: 0px 0 0 5px;
-    padding: 0;
+    color: #565eef;
   }
 `;
 
 export const PopUserSet = styled.div`
   position: absolute;
-  top: 61px;
+  top: 60px;
   right: 0;
-  width: 213px;
-  height: 205px;
-  border-radius: 10px;
-  border: 0.7px solid rgba(148, 166, 190, 0.4);
-  background: ${(prop) => prop.theme.popUserSet};
-  box-shadow: 0px 10px 39px 0px rgba(26, 56, 101, 0.21);
-  padding: 34px;
-  text-align: center;
-  z-index: 2;
-`;
-
-export const UserName = styled.p`
-  color: ${(prop) => prop.theme.text};
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 21px;
-  letter-spacing: -0.14px;
-  margin-bottom: 4px;
-`;
-
-export const UserMail = styled.p`
-  color: #94a6be;
-  font-size: 14px;
-  line-height: 21px;
-  letter-spacing: -0.14px;
-  margin-bottom: 10px;
+  background-color: ${(props) => props.theme.header || "#FFFFFF"};
+  border: 0.7px solid #d4dbe5;
+  box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  padding: 20px;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 `;
 
 export const PopUserTheme = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-
+  gap: 20px;
+  text-align: center;
   p {
     color: ${(prop) => prop.theme.text};
     font-size: 14px;
@@ -186,13 +175,11 @@ export const PopUserTheme = styled.div`
   }
 `;
 
-export const PopUserExitBtn = styled.button`
-  padding: 5px 10px;
-  color: ${(prop) => prop.theme.popUserBtn};
-  border: solid 1px ${(prop) => prop.theme.popUserBtn};
-  border-radius: 4px;
-  box-shadow: 0px 0px 20px -3px;
-  background: ${(prop) => prop.theme.popUserSet};
-  margin-top: 30px;
-  ${hover03};
+export const Archive = styled.p`
+  transition: all 0.3s;
+  font-size: 14px;
+  &:hover {
+    cursor: pointer;
+    text-decoration: underline;
+  }
 `;
