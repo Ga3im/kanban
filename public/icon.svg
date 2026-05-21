@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- Фон со скругленными углами для четкости на любой теме браузера -->
+  <rect width="32" height="32" rx="6" fill="#1e293b"/>
+  
+  <!-- Колонка 1 (To Do) -->
+  <rect x="4" y="4" width="7" height="24" rx="2" fill="#334155"/>
+  <rect x="5.5" y="6" width="4" height="5" rx="1" fill="#ef4444"/>
+  <rect x="5.5" y="13" width="4" height="7" rx="1" fill="#64748b"/>
+  
+  <!-- Колонка 2 (In Progress) -->
+  <rect x="12" y="4" width="7" height="24" rx="2" fill="#334155"/>
+  <rect x="13.5" y="6" width="4" height="9" rx="1" fill="#3b82f6"/>
+  <rect x="13.5" y="17" width="4" height="5" rx="1" fill="#64748b"/>
+  
+  <!-- Колонка 3 (Done) -->
+  <rect x="20" y="4" width="7" height="24" rx="2" fill="#334155"/>
+  <rect x="21.5" y="6" width="4" height="6" rx="1" fill="#10b981"/>
+  <rect x="21.5" y="14" width="4" height="4" rx="1" fill="#10b981"/>
+</svg>
